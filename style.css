@@ -187,3 +187,15 @@ body {
     margin: 16px 0;
     cursor: pointer;
 }
+
+.deck-player1 {
+    position: absolute;
+    right: 1%;
+}
+
+.deck-player2 {
+    position: absolute;
+    left: 1%;
+    top: 8px;
+    transform: rotate(180deg);
+}
