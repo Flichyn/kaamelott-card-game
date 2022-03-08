@@ -26,3 +26,4 @@ buttonNone.addEventListener('click', function () {
     gameBoard.style.display = "block";
 })
 
+const card = document.querySelector('.card');
