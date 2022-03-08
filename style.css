@@ -6,7 +6,13 @@
 body {
     box-sizing : border-box;
     margin: 0;
-    background-image: url("background.webp");
+    background-image: url("images/background.webp");
+    user-select: none;
+}
+
+#start-game {
+    display: flex;
+    flex-direction: column;
 }
 
 .card {
@@ -26,6 +32,7 @@ body {
 }
 .card:hover .card-inner {
     transform: rotateY(180deg);
+    cursor: pointer;
 }
 .card-front, .card-back {
     position:absolute;
@@ -38,7 +45,7 @@ body {
    
 }
 .card-front {
-    background-image:url('kaamelott-back-cover.jpg');
+    background-image:url('images/kaamelott-back-cover.jpg');
     background-size:cover;
     background-position:center center;
     display:flex;
@@ -58,7 +65,7 @@ body {
 
 .card-back {
     transform: rotateY(180deg);
-    background-image:url('K6.png');
+    background-image:url('images/duc-aquitaine.png');
     background-size:cover;
     display: flex;
     flex-direction: column;
@@ -139,14 +146,14 @@ body {
 }
 
 #player-1 > img {
-    width: 170px;
+    width: 140px;
     height: 140px;
     border-radius: 100%;
     border: 2px solid white;
 }
 
 #player-2 > img {
-    width: 170px;
+    width: 140px;
     height: 140px;
     border-radius: 100%;
     border: 2px solid white;
@@ -160,12 +167,12 @@ body {
     align-items: flex-end;
 }
 
-.collection {
+.hand {
     display: flex;
     justify-content: space-evenly;
 }
 
-#button-none {
+#button-start {
     text-decoration: none;
     text-align: center;
     padding: 8px 16px;
