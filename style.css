@@ -3,12 +3,19 @@
     --height: calc(1039px / 4);
 }
 
+body {
+    box-sizing : border-box;
+    margin: 0;
+    background-image: url("background.webp");
+}
+
 .card {
     width: calc(744px / 4);
     height: calc(1039px / 4);
     border-radius: 11px;
     transition: transform 1.5s ease, background-color 0.2s ease;
     margin: 8px;
+    border: 1px solid grey;
 }
 
 .card:hover {
@@ -16,51 +23,76 @@
     cursor: pointer;
 }
 
-.card>.back {
+.card > .back {
     width: calc(744px / 4);
     height: calc(1039px / 4);
     border-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #C68254;
-    z-index: 2;
+    background-color: white;
 }
 
 .back-image {
     width: calc(1039px / 6);
-    border: 1px solid transparent;
     height: calc(1039px / 4.2);
     border-radius: 8px;
-    background-color: #FFA920;
+    background-image: url('kaamelott-back-cover.jpg');
 }
 
-.card>.front {
+.card > .front {
     width: calc(744px / 4);
     height: calc(1039px / 4);
     border-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: red;
+    /*background-color: red;*/
     position: relative;
     bottom: var(--height);
-    z-index: 1;
 }
 
-.card>.back:hover {
-    z-index: 2;
+#button-none {
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 16px;
+    color: black;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    font-size: 18px;
+    transition: background-color 0.2s;
+    box-shadow: 3px 3px 0 0 rgba(0,0,0,0.3);
+    margin: 16px 0;
+    cursor: pointer;
 }
 
-.card>.front:hover {
-    z-index: 1;
-    background-color: blue;
+#game-board {
+    display:none;
 }
 
-.back:active {
-    background-color: blue;
+#player-1 {
+    position: absolute;
+    top: 8px;
+    right:1%;
 }
 
-.front:active {
-    background-color: blue;
+#player-2 {
+    position: absolute;
+    bottom: 8px;
+    left: 1%;
+}
+
+#player-1 > img {
+    width: 170px;
+    height: 140px;
+    border-radius: 100%;
+    border: 2px solid white;
+}
+
+#player-2 > img {
+    width: 170px;
+    height: 140px;
+    border-radius: 100%;
+    border: 2px solid white;
 }
