@@ -207,3 +207,15 @@ body {
     left: 2px;
     background-color: rgb(165, 136, 4);
 }
+
+.deck-player1 {
+    position: absolute;
+    right: 1%;
+}
+
+.deck-player2 {
+    position: absolute;
+    left: 1%;
+    top: 8px;
+    transform: rotate(180deg);
+}
