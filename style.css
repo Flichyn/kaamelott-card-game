@@ -137,12 +137,16 @@ body {
     position: absolute;
     top: 8px;
     right:1%;
+   
 }
 
 #player-2 {
     position: absolute;
     bottom: 8px;
     left: 1%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #player-1 > img {
@@ -198,4 +202,14 @@ body {
     left: 1%;
     top: 8px;
     transform: rotate(180deg);
+}
+
+.player-pv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    background-image: url(images/heart.png);
+    color: white;
 }
