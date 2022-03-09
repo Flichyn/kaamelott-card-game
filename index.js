@@ -73,6 +73,7 @@ const deckSuite = [
     new Card('Le Maître d\'Armes', 1, 1, 1, ''),
 ]
 
+
 class Player {
     constructor(name, deck, number) {
         this.name = name;
@@ -81,7 +82,7 @@ class Player {
         this.deck = deck;
         this.number = number
         this.hand = 0;
-    }
+        }
 
     isAlive() {
         if (this.health <= 0) {
@@ -162,8 +163,36 @@ class Player {
     playCard(card) {
 
     }
+       
+  
 }
 
+//Mise en place du bouton fin de tours
+let turn = 1;
+const cardFinish1 = document.querySelector(".hand-player1");
+const cardFinish2 = document.querySelector("#player-1");
+const buttonFinish = document.querySelector("#button-finish");
+
+    buttonFinish.addEventListener("click", function(){
+        if(turn == 1){
+            cardFinish1.style.filter = "grayscale(100%)";
+            cardFinish2.style.filter = "grayscale(100%)";
+            turn++;
+            buttonFinish.setAttribute("disabled", true);
+            console.log(turn);
+        } else {
+            cardFinish1.style.filter = "grayscale(0%)";
+            cardFinish2.style.filter = "grayscale(0%)";
+            turn--;
+            console.log(turn);
+        }
+    });
+
+// Mise en place des gemmes
+const manaGem1 = document.querySelector("#mana-player1");
+const manaGem2 = document.querySelector("#mana-player2");
+
+// Mise en place du bouton pour commencer une partie
 const startGame = document.querySelector('#start-game');
 startGame.style.backgroundImage = "url('background.webp')";
 startGame.style.minWidth = "100%";
@@ -199,7 +228,11 @@ buttonStart.addEventListener('click', function () {
     }
 
     // Créer fonction pour définir le premier joueur
-})
+});
+
+
+
+
 
 // Créer les contraintes de coûts (mana, conditions pour jouer une carte...)
 
