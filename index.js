@@ -82,6 +82,7 @@ class Player {
         this.deck = deck;
         this.number = number
         this.hand = 0;
+        this.board = [];
         }
 
     isAlive() {
@@ -109,10 +110,15 @@ class Player {
 
         this.deck = newDeck;
     }
-
+    
+    board(card) {
+      
+    
+    }
+    
     drawCard(card) {
         // Create HTML tags and add classes
-        const handPlayer = document.querySelector('.hand-player' + this.number)
+        const handPlayer = document.querySelector('.hand-player' + this.number);
 
         const newCard = document.createElement('div');
         newCard.classList.add('card');

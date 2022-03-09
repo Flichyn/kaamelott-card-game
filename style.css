@@ -276,3 +276,26 @@ body {
 #button-finish:disabled {
     background-color: rgb(255, 2, 2);
 }
+
+.board-player1 {
+    position: absolute;
+    top: 25%;
+}
+
+.board-player2 {
+    position: absolute;
+    bottom: 25%;
+}
+
+.board-card {
+    margin: 8px;
+    width: calc(744px / 5);
+    height: calc(1039px / 5);
+    perspective: 1000px;
+    text-align: center;
+}
+
+.board-card:hover {
+    cursor: pointer;
+    position: relative;
+}
