@@ -20,6 +20,8 @@ class Card {
         } else if(enemy instanceof Player) {
             enemy.health -= this.strength;
             console.log(`${this.name} attaque ${enemy.name} et lui retire ${this.strength} PV.`);
+            const newPV = document.querySelector(".player-pv" + enemy.number);
+            newPV.innerHTML = enemy.health;
         }
     }
 
@@ -31,7 +33,7 @@ class Card {
 }
 
 // Player class constructor
-const MAX_HEALTH = 30;
+const MAX_HEALTH = 20;
 const MANA = 0;
 const deck1 = [
     new Card('Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
@@ -185,6 +187,10 @@ buttonStart.addEventListener('click', function () {
     player2 = new Player('CPU', deck2, 2);
     player1.shuffle();
     player2.shuffle();
+    const healthStart1 = document.querySelector(".player-pv1");
+    healthStart1.innerHTML = MAX_HEALTH;
+    const healthStart2 = document.querySelector(".player-pv2");
+    healthStart2.innerHTML = MAX_HEALTH;
 
     // Draw the three first cards
     for (let i = 0; i < 3; i++) {
