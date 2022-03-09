@@ -1,6 +1,7 @@
 // Card class constructor
 class Card {
-    constructor(name, health, strength, shield, cost, image) {
+    constructor(id, name, health, strength, shield, cost, image) {
+        this.id = id;
         this.name = name;
         this.health = health;
         this.strength = strength;
@@ -36,19 +37,19 @@ class Card {
 const MAX_HEALTH = 20;
 const MANA = 0;
 const deck1 = [
-    new Card('Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
-    new Card('Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
-    new Card('Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
-    new Card('Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),
-    new Card('Lancelot', 4, 8, 3, 4, 'images/lancelot.png'),
+    new Card(1, 'Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
+    new Card(2, 'Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
+    new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
+    new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),
+    new Card(5, 'Lancelot', 4, 8, 3, 4, 'images/lancelot.png'),
 ];
 
 const deck2 = [
-    new Card('Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
-    new Card('Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
-    new Card('Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
-    new Card('Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),
-    new Card('Lancelot', 4, 8, 3, 4, 'images/lancelot.png'),
+    new Card(1, 'Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
+    new Card(2, 'Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
+    new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
+    new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),
+    new Card(5, 'Lancelot', 4, 8, 3, 4, 'images/lancelot.png'),
 ];
 
 const discardPile1 = [];
@@ -56,21 +57,21 @@ const discardPile2 = [];
 
 // POUR PLUS TARD
 const deckSuite = [
-    new Card('Guenièvre', 1, 1, 1, ''),
-    new Card('Duchesse d\'Aquitaine', 1, 1, 1, ''),
-    new Card('Séli', 1, 1, 1, ''),
-    new Card('Bohort', 1, 1, 1, ''),
-    new Card('Élias', 1, 1, 1, ''),
-    new Card('Merlin', 1, 1, 1, ''),
-    new Card('La Dame du Lac', 1, 1, 1, ''),
-    new Card('Loth', 1, 1, 1, ''),
-    new Card('Le Jurisconsulte', 1, 1, 1, ''),
-    new Card('Dagonet', 1, 1, 1, ''),
-    new Card('Mevanwi', 1, 1, 1, ''),
-    new Card('Venec', 1, 1, 1, ''),
-    new Card('Le Roi Burgonde', 1, 1, 1, ''),
-    new Card('Méléagant', 1, 1, 1, ''),
-    new Card('Le Maître d\'Armes', 1, 1, 1, ''),
+    new Card(6, 'Guenièvre', 1, 1, 1, ''),
+    new Card(7, 'Duchesse d\'Aquitaine', 1, 1, 1, ''),
+    new Card(8, 'Séli', 1, 1, 1, ''),
+    new Card(9, 'Bohort', 1, 1, 1, ''),
+    new Card(10, 'Élias', 1, 1, 1, ''),
+    new Card(11, 'Merlin', 1, 1, 1, ''),
+    new Card(12, 'La Dame du Lac', 1, 1, 1, ''),
+    new Card(13, 'Loth', 1, 1, 1, ''),
+    new Card(14, 'Le Jurisconsulte', 1, 1, 1, ''),
+    new Card(15, 'Dagonet', 1, 1, 1, ''),
+    new Card(16, 'Mevanwi', 1, 1, 1, ''),
+    new Card(17, 'Venec', 1, 1, 1, ''),
+    new Card(18, 'Le Roi Burgonde', 1, 1, 1, ''),
+    new Card(19, 'Méléagant', 1, 1, 1, ''),
+    new Card(20, 'Le Maître d\'Armes', 1, 1, 1, ''),
 ]
 
 
@@ -82,6 +83,7 @@ class Player {
         this.deck = deck;
         this.number = number
         this.hand = [];
+        this.board = [];
     }
 
     isAlive() {
@@ -148,8 +150,6 @@ class Player {
 
 function createCard(card) {
     // Create HTML tags and add classes
-    const handPlayer = document.querySelector('.hand-player' + this.number)
-
     const newCard = document.createElement('div');
     newCard.classList.add('card');
 
@@ -191,6 +191,7 @@ function createCard(card) {
     shieldIcon.innerHTML = card.shield;
     gemIcon.innerHTML = card.cost;
     cardFront.style.backgroundImage = 'url(' + card.image + ')';
+    newCard.setAttribute('data-id', card.id);
 
     return newCard;
 }
@@ -258,19 +259,35 @@ buttonStart.addEventListener('click', function () {
     // Display cards in hand
     player1.refreshHand();
     player2.refreshHand();
-});
 
-// Ajout des listeners pour jouer une carte sur le terrain
-const playerCards = document.querySelector('.card');
-for (let i = 0; i < playerCards.length; i++) {
-    playerCards[i].addEventListener('click', function() {
-        /*player1.playCard(card);*/
-        playerCards[i].style.visibility = 'hidden';
-        console.log([i]);
+    // Ajout des listeners pour jouer une carte sur le terrain
+    const playerCardsInHand = document.querySelector('.hand-player1');
+
+    playerCardsInHand.addEventListener('click', event => {
+            console.log(event.target.classList.value);
+            if (event.target && event.target.classList.value === "card") {
+                const dataId = event.target.closest('.card').dataset.id;
+                const cardHandToBoard = player1.hand.find(card => card.id == dataId);
+                player1.board.push(cardHandToBoard);
+                /*let newHand = player1.hand.filter(function(card) {
+                    return card !== cardHandToBoard;
+                })*/
+                let newHand = removeFromArray(player1.hand, cardHandToBoard);
+                player1.hand = newHand;
+                player1.refreshHand();
+                /*removeFromArray(player1.hand, cardHandToBoard);*/
+            }
+            
+        })
     })
-}
-
 
 // Créer les contraintes de coûts (mana, conditions pour jouer une carte...)
 
 // Créer les fonctions pour récupérer les valeurs
+
+function removeFromArray(array, cardToRemove) { 
+    
+    return array.filter(function(card) { 
+        return card !== cardToRemove; 
+    });
+}
