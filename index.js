@@ -82,6 +82,7 @@ class Player {
         this.mana = MANA;
         this.deck = deck;
         this.number = number
+        this.board = [new Card('Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),];
         this.hand = [];
         this.board = [];
     }
@@ -144,7 +145,17 @@ class Player {
             // A faire
         })
     }
-       
+
+    refreshBoard() {
+        const board = this.board;
+        const boardPlayer = document.querySelector(".board-player" + this.number);
+
+        while (boardPlayer.firstChild){
+            boardPlayer.removeChild(boardPlayer.firstChild);
+        }
+        board.forEach((card) => boardPlayer.appendChild(createCard(card)))
+    }
+         
   
 }
 
@@ -259,26 +270,26 @@ buttonStart.addEventListener('click', function () {
     // Display cards in hand
     player1.refreshHand();
     player2.refreshHand();
+    player1.refreshBoard();
+    player2.refreshBoard();
+});
 
     // Ajout des listeners pour jouer une carte sur le terrain
     const playerCardsInHand = document.querySelector('.hand-player1');
 
     playerCardsInHand.addEventListener('click', event => {
-            console.log(event.target.classList.value);
-            if (event.target && event.target.classList.value === "card") {
-                const dataId = event.target.closest('.card').dataset.id;
-                const cardHandToBoard = player1.hand.find(card => card.id == dataId);
-                player1.board.push(cardHandToBoard);
-                /*let newHand = player1.hand.filter(function(card) {
-                    return card !== cardHandToBoard;
-                })*/
-                let newHand = removeFromArray(player1.hand, cardHandToBoard);
-                player1.hand = newHand;
-                player1.refreshHand();
-                /*removeFromArray(player1.hand, cardHandToBoard);*/
-            }
-            
-        })
+        console.log(event.target.classList.value);
+        if (event.target && event.target.classList.value === "card") {
+            const dataId = event.target.closest('.card').dataset.id;
+            const cardHandToBoard = player1.hand.find(card => card.id == dataId);
+            player1.board.push(cardHandToBoard);
+            /*let newHand = player1.hand.filter(function(card) {
+                return card !== cardHandToBoard;
+            })*/
+            let newHand = removeFromArray(player1.hand, cardHandToBoard);
+            player1.hand = newHand;
+            player1.refreshHand();
+        }
     })
 
 // Créer les contraintes de coûts (mana, conditions pour jouer une carte...)
