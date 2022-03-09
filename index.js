@@ -81,6 +81,7 @@ class Player {
         this.mana = MANA;
         this.deck = deck;
         this.number = number
+        this.board = [new Card('Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),];
         this.hand = [];
     }
 
@@ -142,7 +143,17 @@ class Player {
             // A faire
         })
     }
-       
+
+    refreshBoard() {
+        const board = this.board;
+        const boardPlayer = document.querySelector(".board-player" + this.number);
+
+        while (boardPlayer.firstChild){
+            boardPlayer.removeChild(boardPlayer.firstChild);
+        }
+        board.forEach((card) => boardPlayer.appendChild(createCard(card)))
+    }
+         
   
 }
 
@@ -258,6 +269,8 @@ buttonStart.addEventListener('click', function () {
     // Display cards in hand
     player1.refreshHand();
     player2.refreshHand();
+    player1.refreshBoard();
+    player2.refreshBoard();
 });
 
 // Ajout des listeners pour jouer une carte sur le terrain
