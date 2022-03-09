@@ -81,9 +81,9 @@ class Player {
         this.mana = MANA;
         this.deck = deck;
         this.number = number
-        this.hand = 0;
-        this.board = [];
-        }
+        this.board = [new Card('Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),];
+        this.hand = [];
+    }
 
     isAlive() {
         if (this.health <= 0) {
@@ -92,8 +92,8 @@ class Player {
     }
 
     isHandFull() {
-        if (this.hand === 5) {
-            return true;
+        if (this.hand.length === 5) {
+            return console.log('Vous ne pouvez pas piocher plus.');
         }
     }
 
@@ -110,67 +110,100 @@ class Player {
 
         this.deck = newDeck;
     }
-    
-    board(card) {
-      
-    
+
+    drawCard() {
+        //Récupérer carte du deck et mettre dans la main
+        if (this.deck.length >= 1) {
+            const drawnCard = this.deck.shift();
+            const deckPlayer = document.querySelector('.deck-player' + this.number)
+            this.hand.push(drawnCard);
+            if (this.deck.length === 0) {
+                deckPlayer.style.visibility = 'hidden';
+            }
+            this.refreshHand();
+        } else {
+            console.log('Vous ne pouvez pas piocher plus.');
+        }
     }
-    
-    drawCard(card) {
-        // Create HTML tags and add classes
+
+    refreshHand() {
+        const hand = this.hand;
         const handPlayer = document.querySelector('.hand-player' + this.number);
+        
+        while(handPlayer.firstChild) {
+            handPlayer.removeChild(handPlayer.firstChild);
+        }
 
-        const newCard = document.createElement('div');
-        newCard.classList.add('card');
-    
-        const cardInner = document.createElement('div');
-        cardInner.classList.add('card-inner');
-        newCard.appendChild(cardInner);
-    
-        const cardBack = document.createElement('div');
-        cardBack.classList.add('card-back');
-        cardInner.appendChild(cardBack);
-    
-        const cardFront = document.createElement('div');
-        cardFront.classList.add('card-front');
-        cardInner.appendChild(cardFront);
-    
-        const cardIcons = document.createElement('div');
-        cardIcons.classList.add('card-icons');
-        cardFront.appendChild(cardIcons);
-    
-        const weaponIcon = document.createElement('div');
-        weaponIcon.classList.add('weapon');
-        cardIcons.appendChild(weaponIcon);
-    
-        const shieldIcon = document.createElement('div');
-        shieldIcon.classList.add('shield');
-        cardIcons.appendChild(shieldIcon);
-    
-        const heartIcon = document.createElement('div');
-        heartIcon.classList.add('heart');
-        cardIcons.appendChild(heartIcon);
-
-        const gemIcon = document.createElement('div');
-        gemIcon.classList.add('gem');
-        cardIcons.appendChild(gemIcon);
-    
-        // Add data to HTML elements
-        heartIcon.innerHTML = card.health;
-        weaponIcon.innerHTML = card.strength;
-        shieldIcon.innerHTML = card.shield;
-        gemIcon.innerHTML = card.cost;
-        cardFront.style.backgroundImage = 'url(' + card.image + ')';
-    
-        handPlayer.appendChild(newCard);
-        this.hand += 1;
+        hand.forEach((card) => handPlayer.appendChild(createCard(card)));
     }
 
     playCard(card) {
-
+        const enemyCards = document.querySelectorAll('.hand-player' + this.number === 1 ? 2 : 1);
+        enemyCards.addEventListener('click', function() {
+            // A faire
+        })
     }
-       
+
+    refreshBoard() {
+        const board = this.board;
+        const boardPlayer = document.querySelector(".board-player" + this.number);
+
+        while (boardPlayer.firstChild){
+            boardPlayer.removeChild(boardPlayer.firstChild);
+        }
+        board.forEach((card) => boardPlayer.appendChild(createCard(card)))
+    }
+         
   
+}
+
+function createCard(card) {
+    // Create HTML tags and add classes
+    const handPlayer = document.querySelector('.hand-player' + this.number)
+
+    const newCard = document.createElement('div');
+    newCard.classList.add('card');
+
+    const cardInner = document.createElement('div');
+    cardInner.classList.add('card-inner');
+    newCard.appendChild(cardInner);
+
+    const cardBack = document.createElement('div');
+    cardBack.classList.add('card-back');
+    cardInner.appendChild(cardBack);
+
+    const cardFront = document.createElement('div');
+    cardFront.classList.add('card-front');
+    cardInner.appendChild(cardFront);
+
+    const cardIcons = document.createElement('div');
+    cardIcons.classList.add('card-icons');
+    cardFront.appendChild(cardIcons);
+
+    const weaponIcon = document.createElement('div');
+    weaponIcon.classList.add('weapon');
+    cardIcons.appendChild(weaponIcon);
+
+    const shieldIcon = document.createElement('div');
+    shieldIcon.classList.add('shield');
+    cardIcons.appendChild(shieldIcon);
+
+    const heartIcon = document.createElement('div');
+    heartIcon.classList.add('heart');
+    cardIcons.appendChild(heartIcon);
+
+    const gemIcon = document.createElement('div');
+    gemIcon.classList.add('gem');
+    cardIcons.appendChild(gemIcon);
+
+    // Add data to HTML elements
+    heartIcon.innerHTML = card.health;
+    weaponIcon.innerHTML = card.strength;
+    shieldIcon.innerHTML = card.shield;
+    gemIcon.innerHTML = card.cost;
+    cardFront.style.backgroundImage = 'url(' + card.image + ')';
+
+    return newCard;
 }
 
 //Mise en place du bouton fin de tours
@@ -233,14 +266,24 @@ buttonStart.addEventListener('click', function () {
         player2.drawCard(player2.deck[i]);
     }
 
-    // Créer fonction pour définir le premier joueur
+    // Display cards in hand
+    player1.refreshHand();
+    player2.refreshHand();
+    player1.refreshBoard();
+    player2.refreshBoard();
 });
 
-
-
+// Ajout des listeners pour jouer une carte sur le terrain
+const playerCards = document.querySelector('.card');
+for (let i = 0; i < playerCards.length; i++) {
+    playerCards[i].addEventListener('click', function() {
+        /*player1.playCard(card);*/
+        playerCards[i].style.visibility = 'hidden';
+        console.log([i]);
+    })
+}
 
 
 // Créer les contraintes de coûts (mana, conditions pour jouer une carte...)
 
 // Créer les fonctions pour récupérer les valeurs
-
