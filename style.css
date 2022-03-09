@@ -23,6 +23,12 @@ body {
     text-align: center;
 }
 
+.hand-player2 > .card:hover {
+    cursor: pointer;
+    position: relative;
+    top: 20px;
+}
+
 .card:hover {
     /*transform: rotateY(180deg);*/
     cursor: pointer;
@@ -30,9 +36,9 @@ body {
     bottom: 20px;
 }
 
-.card:active {
-    /* Faudrait mettre un truc mais à réfléchir */
-}
+/*.card:active {
+    Faudrait mettre un truc mais à réfléchir 
+}*/
 
 .card-inner {
     position: relative;
@@ -139,16 +145,22 @@ body {
     display: none;
 }
 
-#player-1 {
-    position: absolute;
-    top: 8px;
-    right: 1%;
-}
-
 #player-2 {
     position: absolute;
+    top: 8px;
+    right:3%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#player-1 {
+    position: absolute;
     bottom: 8px;
-    left: 1%;
+    left: 3%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #player-1 > img {
@@ -218,4 +230,49 @@ body {
     left: 1%;
     top: 8px;
     transform: rotate(180deg);
+}
+
+.container-pv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    background-image: url(images/heart.png);
+    color: white;
+}
+
+.mana-player2 {
+    position: absolute;
+    top: 8px;
+    right: 1%;
+}
+
+.mana-player1 {
+    position: absolute;
+    bottom: 8px;
+    left: 1%;
+}
+
+#button-finish {
+    text-decoration: none;
+    text-align: center;
+    padding: 16px;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    font-size: 18px;
+    transition: background-color 0.2s;
+    box-shadow: 3px 3px 0 0 rgba(0,0,0,0.3);
+    margin: 16px 0;
+    cursor: pointer;
+    position: absolute;
+    right: 1%;
+    top: 45%
+}
+
+#button-finish:disabled {
+    background-color: rgb(255, 2, 2);
 }

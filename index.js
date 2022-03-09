@@ -20,6 +20,8 @@ class Card {
         } else if(enemy instanceof Player) {
             enemy.health -= this.strength;
             console.log(`${this.name} attaque ${enemy.name} et lui retire ${this.strength} PV.`);
+            const newPV = document.querySelector(".player-pv" + enemy.number);
+            newPV.innerHTML = enemy.health;
         }
     }
 
@@ -31,7 +33,7 @@ class Card {
 }
 
 // Player class constructor
-const MAX_HEALTH = 30;
+const MAX_HEALTH = 20;
 const MANA = 0;
 const deck1 = [
     new Card('Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
@@ -70,6 +72,7 @@ const deckSuite = [
     new Card('Méléagant', 1, 1, 1, ''),
     new Card('Le Maître d\'Armes', 1, 1, 1, ''),
 ]
+
 
 class Player {
     constructor(name, deck, number) {
@@ -120,7 +123,6 @@ class Player {
         } else {
             console.log('Vous ne pouvez pas piocher plus.');
         }
-        
     }
 
     refreshHand() {
@@ -140,6 +142,8 @@ class Player {
             // A faire
         })
     }
+       
+  
 }
 
 function createCard(card) {
@@ -191,6 +195,32 @@ function createCard(card) {
     return newCard;
 }
 
+//Mise en place du bouton fin de tours
+let turn = 1;
+const cardFinish1 = document.querySelector(".hand-player1");
+const cardFinish2 = document.querySelector("#player-1");
+const buttonFinish = document.querySelector("#button-finish");
+
+    buttonFinish.addEventListener("click", function(){
+        if(turn == 1){
+            cardFinish1.style.filter = "grayscale(100%)";
+            cardFinish2.style.filter = "grayscale(100%)";
+            turn++;
+            buttonFinish.setAttribute("disabled", true);
+            console.log(turn);
+        } else {
+            cardFinish1.style.filter = "grayscale(0%)";
+            cardFinish2.style.filter = "grayscale(0%)";
+            turn--;
+            console.log(turn);
+        }
+    });
+
+// Mise en place des gemmes
+const manaGem1 = document.querySelector("#mana-player1");
+const manaGem2 = document.querySelector("#mana-player2");
+
+// Mise en place du bouton pour commencer une partie
 const startGame = document.querySelector('#start-game');
 startGame.style.backgroundImage = "url('background.webp')";
 startGame.style.minWidth = "100%";
@@ -214,6 +244,10 @@ buttonStart.addEventListener('click', function () {
     player2 = new Player('CPU', deck2, 2);
     player1.shuffle();
     player2.shuffle();
+    const healthStart1 = document.querySelector(".player-pv1");
+    healthStart1.innerHTML = MAX_HEALTH;
+    const healthStart2 = document.querySelector(".player-pv2");
+    healthStart2.innerHTML = MAX_HEALTH;
 
     // Draw the three first cards
     for (let i = 0; i < 3; i++) {
@@ -224,7 +258,7 @@ buttonStart.addEventListener('click', function () {
     // Display cards in hand
     player1.refreshHand();
     player2.refreshHand();
-})
+});
 
 // Ajout des listeners pour jouer une carte sur le terrain
 const playerCards = document.querySelector('.card');
