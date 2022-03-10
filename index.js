@@ -16,7 +16,9 @@ class Card {
             console.log('Vous ne pouvez plus attaquer avec cette carte pour ce tour.')
         } else {
             if (enemy instanceof Card) {
-                const attack = this.strength - enemy.shield
+                let attack = this.strength - enemy.shield;
+                attack = attack < 0 ? 0 : this.strength - enemy.shield;
+                console.log(attack);
                 enemy.health -= attack;
                 console.log(`${this.name} attaque ${enemy.name} et lui retire ${attack} PV.`);
                 if (!enemy.isAlive()) {
@@ -284,22 +286,32 @@ function die(id) {
 
 //Mise en place du bouton fin de tours
 let turn = 1;
-const cardFinish1 = document.querySelector(".hand-player1");
-const cardFinish2 = document.querySelector("#player-1");
+const cardFinish1 = document.querySelector(".hand-player" + (turn === 1 ? '1' : '2'));
+const cardFinish2 = document.querySelector("#player-" + (turn === 1 ? '1' : '2'));
 const buttonFinish = document.querySelector("#button-finish");
+const boardPlayer = document.querySelector('.board-player' + (turn === 1 ? '1' : '2'));
+const handPlayer = document.querySelector('.hand-player' + (turn === 1 ? '1' : '2'));
+console.log(boardPlayer)
 
     buttonFinish.addEventListener("click", function(){
         if (turn == 1) {
             cardFinish1.style.filter = "grayscale(100%)";
             cardFinish2.style.filter = "grayscale(100%)";
+            boardPlayer.classList.toggle('no-events');
+            handPlayer.classList.toggle('no-events');
             turn++;
             /*buttonFinish.setAttribute("disabled", true);*/
             player1.endTurn();
+            player2.drawCard();
+            // INSÉRER FONCTION IA
         } else {
             cardFinish1.style.filter = "grayscale(0%)";
             cardFinish2.style.filter = "grayscale(0%)";
+            boardPlayer.classList.toggle('no-events');
+            handPlayer.classList.toggle('no-events');
             turn--;
             player2.endTurn();
+            player1.drawCard();
         }
     });
 
@@ -362,6 +374,7 @@ buttonStart.addEventListener('click', function () {
     // Recherche ID d'une div selectionné pour pouvoir la resortir
     playerCardsInHand.addEventListener('click', event => {
         if (event.target && event.target.classList.value === "card") {
+            console.log('oucouc');
             const dataId = event.target.closest('.card').dataset.id;
             const cardHandToBoard = player1.hand.find(card => card.id == dataId);
             if (player1.useGems(cardHandToBoard.cost)) {
