@@ -33,7 +33,6 @@ body {
     /*transform: rotateY(180deg);*/
     cursor: pointer;
     position: relative;
-    bottom: 20px;
 }
 
 /*.card:active {
