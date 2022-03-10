@@ -149,36 +149,32 @@ body {
     display: none;
 }
 
-#player-2 {
+#player-1, #player-2 {
     position: absolute;
-    top: 8px;
-    right:3%;
     display:flex;
     flex-direction: column;
     align-items: center;
+}
+
+#player-1 > img, #player-2 > img {
+    width: 140px;
+    height: 140px;
+    border-radius: 100%;
+    border: 2px solid white;
 }
 
 #player-1 {
-    position: absolute;
     bottom: 8px;
     left: 3%;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-#player-1 > img {
-    width: 140px;
-    height: 140px;
-    border-radius: 100%;
-    border: 2px solid white;
+#player-2 {
+    top: 8px;
+    right: 3%;
 }
 
-#player-2 > img {
-    width: 140px;
-    height: 140px;
-    border-radius: 100%;
-    border: 2px solid white;
+#player-1 *, #player-2 * {
+    pointer-events: none;
 }
 
 .container {
@@ -187,6 +183,7 @@ body {
     justify-content: center;
     min-height: 98vh;
     align-items: flex-end;
+    height: 100vh;
 }
 
 .hand-player1 {
@@ -202,6 +199,7 @@ body {
 }
 
 #button-start {
+    font-family: 'Oldania ADF Std';
     text-decoration: none;
     text-align: center;
     padding: 16px;
@@ -227,6 +225,7 @@ body {
 .deck-player1 {
     position: absolute;
     right: 1%;
+    bottom: 8px;
 }
 
 .deck-player2 {
@@ -240,6 +239,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Oldania ADF Std';
+    font-size: 30px;
     width: 64px;
     height: 64px;
     background-image: url(images/heart.png);
@@ -259,6 +260,8 @@ body {
 }
 
 #button-finish {
+    font-family: 'Oldania ADF Std';
+    font-size: 50px;
     text-decoration: none;
     text-align: center;
     padding: 16px;
@@ -274,7 +277,9 @@ body {
     cursor: pointer;
     position: absolute;
     right: 1%;
-    top: 45%
+    top: 45%;
+    bottom: 45%;
+    z-index: 99;
 }
 
 #button-finish:disabled {
@@ -282,13 +287,17 @@ body {
 }
 
 .board-player1 {
+    display: flex;
+    justify-content: center;
     position: absolute;
-    top: 25%;
+    bottom: 25%;
 }
 
 .board-player2 {
+    display: flex;
+    justify-content: center;
     position: absolute;
-    bottom: 25%;
+    top: 25%;
 }
 
 .board-player1 > .card {
@@ -309,4 +318,12 @@ body {
     cursor: pointer;
     position: relative;
     bottom: 0px;
+}
+
+hr {
+    position: absolute;
+    top: calc(50% - 2px);
+    bottom: 50%;
+    min-width: 98vw;
+    margin: 0;
 }
