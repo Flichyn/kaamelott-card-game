@@ -103,7 +103,7 @@ class Player {
 
     isHandFull() {
         if (this.hand.length === 5) {
-            return createPop('Vous ne pouvez pas piocher plus.');
+            return "";
         }
     }
 
@@ -124,7 +124,7 @@ class Player {
     drawCard() {
         //Récupérer carte du deck et mettre dans la main
         if (this.isHandFull()) {
-            createPop('Vous avez déjà cinq cartes en main, vous ne pouvez pas piocher plus. Veuillez jouer des cartes.');
+            return "";
         } else {
             if (this.deck.length >= 1) {
                 const drawnCard = this.deck.shift();
@@ -135,7 +135,7 @@ class Player {
                 }
                 this.refreshHand();
             } else {
-                createPop('Vous ne pouvez pas piocher plus.');
+                return "";
             }
         }
         
@@ -389,7 +389,6 @@ buttonStart.addEventListener('click', function () {
     // Recherche ID d'une div selectionné pour pouvoir la resortir
     playerCardsInHand.addEventListener('click', event => {
         if (event.target && event.target.classList.value === "card") {
-            console.log('oucouc');
             const dataId = event.target.closest('.card').dataset.id;
             const cardHandToBoard = player1.hand.find(card => card.id == dataId);
             if (player1.useGems(cardHandToBoard.cost)) {
