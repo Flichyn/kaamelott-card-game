@@ -13,23 +13,23 @@ class Card {
 
     attack(enemy) {
         if (this.hasAttacked) {
-            console.log('Vous ne pouvez plus attaquer avec cette carte pour ce tour.')
+            createPop('Vous ne pouvez plus attaquer avec cette carte pour ce tour.')
         } else {
             if (enemy instanceof Card) {
                 let attack = this.strength - enemy.shield;
                 attack = attack < 0 ? 0 : this.strength - enemy.shield;
                 console.log(attack);
                 enemy.health -= attack;
-                console.log(`${this.name} attaque ${enemy.name} et lui retire ${attack} PV.`);
+                createPop(`${this.name} attaque ${enemy.name} et lui retire ${attack} PV.`);
                 if (!enemy.isAlive()) {
                     enemy.health = 0;
-                    console.log(`${enemy.name} est mort.`);
+                    createPop(`${enemy.name} est mort.`);
                     die(enemy.id);
                 }
                 this.hasAttacked = true;
             } else if (enemy instanceof Player) {
                 enemy.health -= this.strength;
-                console.log(`${this.name} attaque ${enemy.name} et lui retire ${this.strength} PV.`);
+                createPop(`${this.name} attaque ${enemy.name} et lui retire ${this.strength} PV.`);
                 const newPV = document.querySelector(".player-pv" + enemy.number);
                 newPV.innerHTML = enemy.health;
                 this.hasAttacked = true;
@@ -103,7 +103,7 @@ class Player {
 
     isHandFull() {
         if (this.hand.length === 5) {
-            return console.log('Vous ne pouvez pas piocher plus.');
+            return createPop('Vous ne pouvez pas piocher plus.');
         }
     }
 
@@ -124,7 +124,7 @@ class Player {
     drawCard() {
         //Récupérer carte du deck et mettre dans la main
         if (this.isHandFull()) {
-            console.log('Vous avez déjà cinq cartes en main, vous ne pouvez pas piocher plus. Veuillez jouer des cartes.');
+            createPop('Vous avez déjà cinq cartes en main, vous ne pouvez pas piocher plus. Veuillez jouer des cartes.');
         } else {
             if (this.deck.length >= 1) {
                 const drawnCard = this.deck.shift();
@@ -135,7 +135,7 @@ class Player {
                 }
                 this.refreshHand();
             } else {
-                console.log('Vous ne pouvez pas piocher plus.');
+                createPop('Vous ne pouvez pas piocher plus.');
             }
         }
         
@@ -208,6 +208,21 @@ class Player {
     };
 
   
+}
+const popUp = document.querySelector(".container");
+function createPop(message) {
+    const divPop = document.createElement("div");
+    divPop.classList.add("popUp");
+    popUp.appendChild(divPop);
+
+    const newPop = document.createElement('p');
+    newPop.innerHTML= message;
+    divPop.appendChild(newPop);
+
+    const imgPop = document.createElement('img');
+    imgPop.src = "images/logoKaamelott.png";
+    imgPop.classList.add('logo-kaamelott');
+    divPop.appendChild(imgPop);
 }
 
 function createCard(card) {
@@ -385,7 +400,7 @@ buttonStart.addEventListener('click', function () {
                 player1.refreshHand();
                 player1.refreshBoard();
             } else {
-                console.log('Vous ne pouvez pas jouer cette carte, vous n\'avez pas assez de mana.')
+                createPop('Vous ne pouvez pas jouer cette carte, vous n\'avez pas assez de mana.')
             }
         }
     })
@@ -433,7 +448,7 @@ buttonStart.addEventListener('click', function () {
                     if (playerDefender.board.length === 0) {
                         cardAttacker.attack(playerDefender);
                     } else {
-                        console.log('Vous ne pouvez pas attaquer votre adversaire, car il lui reste des cartes sur son plateau.');
+                        createPop('Vous ne pouvez pas attaquer votre adversaire, car il lui reste des cartes sur son plateau.');
                     }
                     
                 }
