@@ -1,34 +1,44 @@
 // Card class constructor
 class Card {
-    constructor(name, health, strength, shield, cost, image) {
+    constructor(id, name, health, strength, shield, cost, image) {
+        this.id = id;
         this.name = name;
         this.health = health;
         this.strength = strength;
         this.shield = shield;
         this.cost = cost;
         this.image = image ?? '';
+        this.hasAttacked = false;
     }
 
     attack(enemy) {
-        if(enemy instanceof Card) {
-            const attack = this.strength - enemy.shield
-            enemy.health -= attack;
-            console.log(`${this.name} attaque ${enemy.name} et lui retire ${attack} PV.`);
-            if (!enemy.isAlive) {
-                console.log(`${enemy.name} est mort.`)
+        if (this.hasAttacked) {
+            console.log('Vous ne pouvez plus attaquer avec cette carte pour ce tour.')
+        } else {
+            if (enemy instanceof Card) {
+                const attack = this.strength - enemy.shield
+                enemy.health -= attack;
+                console.log(`${this.name} attaque ${enemy.name} et lui retire ${attack} PV.`);
+                if (!enemy.isAlive()) {
+                    enemy.health = 0;
+                    console.log(`${enemy.name} est mort.`);
+                    die(enemy.id);
+                }
+                this.hasAttacked = true;
+            } else if (enemy instanceof Player) {
+                enemy.health -= this.strength;
+                console.log(`${this.name} attaque ${enemy.name} et lui retire ${this.strength} PV.`);
+                const newPV = document.querySelector(".player-pv" + enemy.number);
+                newPV.innerHTML = enemy.health;
+                this.hasAttacked = true;
             }
-        } else if(enemy instanceof Player) {
-            enemy.health -= this.strength;
-            console.log(`${this.name} attaque ${enemy.name} et lui retire ${this.strength} PV.`);
-            const newPV = document.querySelector(".player-pv" + enemy.number);
-            newPV.innerHTML = enemy.health;
         }
     }
 
     isAlive() {
         if (this.health > 0) {
-            return true
-        };
+            return true;
+        }
     }
 }
 
@@ -36,41 +46,38 @@ class Card {
 const MAX_HEALTH = 20;
 const MANA = 0;
 const deck1 = [
-    new Card('Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
-    new Card('Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
-    new Card('Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
-    new Card('Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),
-    new Card('Lancelot', 4, 8, 3, 4, 'images/lancelot.png'),
+    new Card(1, 'Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
+    new Card(2, 'Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
+    new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
+    new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),
+    new Card(5, 'Lancelot', 4, 8, 3, 4, 'images/lancelot.png'),
 ];
 
 const deck2 = [
-    new Card('Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
-    new Card('Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
-    new Card('Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
-    new Card('Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),
-    new Card('Lancelot', 4, 8, 3, 4, 'images/lancelot.png'),
+    new Card(1, 'Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
+    new Card(2, 'Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
+    new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
+    new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),
+    new Card(5, 'Lancelot', 4, 8, 3, 4, 'images/lancelot.png'),
 ];
-
-const discardPile1 = [];
-const discardPile2 = [];
 
 // POUR PLUS TARD
 const deckSuite = [
-    new Card('Guenièvre', 1, 1, 1, ''),
-    new Card('Duchesse d\'Aquitaine', 1, 1, 1, ''),
-    new Card('Séli', 1, 1, 1, ''),
-    new Card('Bohort', 1, 1, 1, ''),
-    new Card('Élias', 1, 1, 1, ''),
-    new Card('Merlin', 1, 1, 1, ''),
-    new Card('La Dame du Lac', 1, 1, 1, ''),
-    new Card('Loth', 1, 1, 1, ''),
-    new Card('Le Jurisconsulte', 1, 1, 1, ''),
-    new Card('Dagonet', 1, 1, 1, ''),
-    new Card('Mevanwi', 1, 1, 1, ''),
-    new Card('Venec', 1, 1, 1, ''),
-    new Card('Le Roi Burgonde', 1, 1, 1, ''),
-    new Card('Méléagant', 1, 1, 1, ''),
-    new Card('Le Maître d\'Armes', 1, 1, 1, ''),
+    new Card(6, 'Guenièvre', 1, 1, 1, ''),
+    new Card(7, 'Duchesse d\'Aquitaine', 1, 1, 1, ''),
+    new Card(8, 'Séli', 1, 1, 1, ''),
+    new Card(9, 'Bohort', 1, 1, 1, ''),
+    new Card(10, 'Élias', 1, 1, 1, ''),
+    new Card(11, 'Merlin', 1, 1, 1, ''),
+    new Card(12, 'La Dame du Lac', 1, 1, 1, ''),
+    new Card(13, 'Loth', 1, 1, 1, ''),
+    new Card(14, 'Le Jurisconsulte', 1, 1, 1, ''),
+    new Card(15, 'Dagonet', 1, 1, 1, ''),
+    new Card(16, 'Mevanwi', 1, 1, 1, ''),
+    new Card(17, 'Venec', 1, 1, 1, ''),
+    new Card(18, 'Le Roi Burgonde', 1, 1, 1, ''),
+    new Card(19, 'Méléagant', 1, 1, 1, ''),
+    new Card(20, 'Le Maître d\'Armes', 1, 1, 1, ''),
 ]
 
 
@@ -81,8 +88,9 @@ class Player {
         this.mana = MANA;
         this.deck = deck;
         this.number = number
-        this.board = [new Card('Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),];
         this.hand = [];
+        this.board = [];
+        this.discardPile = [];
     }
 
     isAlive() {
@@ -113,17 +121,22 @@ class Player {
 
     drawCard() {
         //Récupérer carte du deck et mettre dans la main
-        if (this.deck.length >= 1) {
-            const drawnCard = this.deck.shift();
-            const deckPlayer = document.querySelector('.deck-player' + this.number)
-            this.hand.push(drawnCard);
-            if (this.deck.length === 0) {
-                deckPlayer.style.visibility = 'hidden';
-            }
-            this.refreshHand();
+        if (this.isHandFull()) {
+            console.log('Vous avez déjà cinq cartes en main, vous ne pouvez pas piocher plus. Veuillez jouer des cartes.');
         } else {
-            console.log('Vous ne pouvez pas piocher plus.');
+            if (this.deck.length >= 1) {
+                const drawnCard = this.deck.shift();
+                const deckPlayer = document.querySelector('.deck-player' + this.number)
+                this.hand.push(drawnCard);
+                if (this.deck.length === 0) {
+                    deckPlayer.style.visibility = 'hidden';
+                }
+                this.refreshHand();
+            } else {
+                console.log('Vous ne pouvez pas piocher plus.');
+            }
         }
+        
     }
 
     refreshHand() {
@@ -137,21 +150,20 @@ class Player {
         hand.forEach((card) => handPlayer.appendChild(createCard(card)));
     }
 
-    playCard(card) {
-        const enemyCards = document.querySelectorAll('.hand-player' + this.number === 1 ? 2 : 1);
-        enemyCards.addEventListener('click', function() {
-            // A faire
-        })
-    }
-
     refreshBoard() {
         const board = this.board;
         const boardPlayer = document.querySelector(".board-player" + this.number);
 
-        while (boardPlayer.firstChild){
+        while (boardPlayer.firstChild) {
             boardPlayer.removeChild(boardPlayer.firstChild);
         }
-        board.forEach((card) => boardPlayer.appendChild(createCard(card)))
+        board.forEach((card) => boardPlayer.appendChild(createCard(card)));
+    }
+
+    refreshHealth() {
+        const player = (turn === 1 ? player2 : player1);
+        const healthPoints = document.querySelector('player-pv' + player.number);
+        healthPoints.innerHTML = player.health;
     }
          
   
@@ -159,8 +171,6 @@ class Player {
 
 function createCard(card) {
     // Create HTML tags and add classes
-    const handPlayer = document.querySelector('.hand-player' + this.number)
-
     const newCard = document.createElement('div');
     newCard.classList.add('card');
 
@@ -202,8 +212,29 @@ function createCard(card) {
     shieldIcon.innerHTML = card.shield;
     gemIcon.innerHTML = card.cost;
     cardFront.style.backgroundImage = 'url(' + card.image + ')';
+    newCard.setAttribute('data-id', card.id);
 
     return newCard;
+}
+
+function die(id) {
+    let player;
+    let opponent;
+
+    if (turn == 1) {
+        player = player1;
+        opponent = player2;
+    } else if (turn == 2) {
+        player = player2;
+        opponent = player1;
+    }
+
+    const deadCard = opponent.board.find(card => card.id == id);
+    console.log(deadCard);
+    opponent.discardPile.push(deadCard);
+    const newBoard = removeFromArray(opponent.board, deadCard);
+    opponent.board = newBoard;
+    opponent.refreshBoard();
 }
 
 //Mise en place du bouton fin de tours
@@ -213,17 +244,15 @@ const cardFinish2 = document.querySelector("#player-1");
 const buttonFinish = document.querySelector("#button-finish");
 
     buttonFinish.addEventListener("click", function(){
-        if(turn == 1){
+        if (turn == 1){
             cardFinish1.style.filter = "grayscale(100%)";
             cardFinish2.style.filter = "grayscale(100%)";
             turn++;
             buttonFinish.setAttribute("disabled", true);
-            console.log(turn);
         } else {
             cardFinish1.style.filter = "grayscale(0%)";
             cardFinish2.style.filter = "grayscale(0%)";
             turn--;
-            console.log(turn);
         }
     });
 
@@ -257,8 +286,11 @@ buttonStart.addEventListener('click', function () {
     player2.shuffle();
     const healthStart1 = document.querySelector(".player-pv1");
     healthStart1.innerHTML = MAX_HEALTH;
+    healthStart1.parentElement.parentElement.setAttribute("data-id", 'player' + player1.number);
     const healthStart2 = document.querySelector(".player-pv2");
     healthStart2.innerHTML = MAX_HEALTH;
+    healthStart2.parentElement.parentElement.setAttribute("data-id", 'player' + player2.number);
+
 
     // Draw the three first cards
     for (let i = 0; i < 3; i++) {
@@ -273,17 +305,80 @@ buttonStart.addEventListener('click', function () {
     player2.refreshBoard();
 });
 
-// Ajout des listeners pour jouer une carte sur le terrain
-const playerCards = document.querySelector('.card');
-for (let i = 0; i < playerCards.length; i++) {
-    playerCards[i].addEventListener('click', function() {
-        /*player1.playCard(card);*/
-        playerCards[i].style.visibility = 'hidden';
-        console.log([i]);
-    })
-}
+    // Ajout du listener pour jouer une carte sur le terrain
+    const playerCardsInHand = document.querySelector('.hand-player1');
 
+    playerCardsInHand.addEventListener('click', event => {
+        if (event.target && event.target.classList.value === "card") {
+            const dataId = event.target.closest('.card').dataset.id;
+            const cardHandToBoard = player1.hand.find(card => card.id == dataId);
+            player1.board.push(cardHandToBoard);
+            let newHand = removeFromArray(player1.hand, cardHandToBoard);
+
+            player1.hand = newHand;
+            player1.refreshHand();
+            player1.refreshBoard();
+        }
+    })
+
+    const playerCardsInHand2 = document.querySelector('.hand-player2');
+
+    playerCardsInHand2.addEventListener('click', event => {
+        if (event.target && event.target.classList.value === "card") {
+            const dataId = event.target.closest('.card').dataset.id;
+            const cardHandToBoard = player2.hand.find(card => card.id == dataId);
+            player2.board.push(cardHandToBoard);
+            let newHand = removeFromArray(player2.hand, cardHandToBoard);
+
+            player2.hand = newHand;
+            player2.refreshHand();
+            player2.refreshBoard();
+        }
+    })
+
+    // Ajout du listener pour attaquer une carte adverse
+    const playerCardsOnBoard = document.querySelector('.board-player1');
+    const enemyCardsOnBoard = document.querySelector('.board-player2');
+    const opponent = document.querySelector('#player-' + (turn === 1 ? '2' : '1'));
+    
+    playerCardsOnBoard.addEventListener('click', event => {
+        if (event.target && event.target.classList.value === "card") {
+            const dataId = event.target.closest('.card').dataset.id;
+            const cardAttacker = player1.board.find(card => card.id == dataId);
+            
+            enemyCardsOnBoard.addEventListener('click', event => {
+                if (event.target && event.target.classList.value === "card") {
+                    const dataId = event.target.closest('.card').dataset.id;
+                    const cardDefender = player2.board.find(card => card.id == dataId);
+
+                    cardAttacker.attack(cardDefender);
+                    player2.refreshBoard();
+                }
+            })
+
+            opponent.addEventListener('click', event => {
+                if (event.target && event.target.dataset.id === "player2") {
+                    const dataId = event.target.closest('div').dataset.id;
+                    const playerDefender = (dataId === 'player2' ? player2 : player1);
+                    
+                    if (playerDefender.board.length === 0) {
+                        cardAttacker.attack(playerDefender);
+                    } else {
+                        console.log('Vous ne pouvez pas attaquer votre adversaire, car il lui reste des cartes sur son plateau.');
+                    }
+                    
+                }
+            })
+        }
+    })
 
 // Créer les contraintes de coûts (mana, conditions pour jouer une carte...)
 
 // Créer les fonctions pour récupérer les valeurs
+
+function removeFromArray(array, cardToRemove) { 
+    
+    return array.filter(function(card) { 
+        return card !== cardToRemove; 
+    });
+}
