@@ -1,3 +1,5 @@
+@import url('http://fonts.cdnfonts.com/css/oldania-adf-std');
+
 :root {
     --width: calc(744px / 4);
     --height: calc(1039px / 4);
@@ -91,7 +93,7 @@ body {
 }
 
 .card-icons {
-    font-family: 'Oldania ADF Std';
+    font-family: 'Oldania ADF Std', sans-serif;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -321,6 +323,10 @@ body {
     cursor: pointer;
     position: relative;
     bottom: 0px;
+}
+
+.no-events {
+    pointer-events: none;
 }
 
 hr {
