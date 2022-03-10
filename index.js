@@ -141,16 +141,13 @@ class Player {
 
     useGems(cost) {
         const availableMana = this.mana;
-        console.log(availableMana);
         const cardCost = cost;
-        console.log(cardCost);
 
         if (cardCost <= availableMana) {
             this.mana -= cardCost;
             this.refreshGem();
             return true;
         } else {
-            console.log('Va te faire foutre avec treize saucisses');
             return false;
         }
 
@@ -199,17 +196,14 @@ class Player {
 
         while (gemPoint.firstChild) {
             gemPoint.removeChild(gemPoint.firstChild);
-            console.log(gemPoint.childNodes);
         }
 
         const number = this.mana;
-        console.log(number);
 
         for (let i = 1; i <= number; i++){
             let gemIcon = document.createElement('img');
             gemIcon.src = "images/gem.svg";
             gemPoint.appendChild(gemIcon);
-            console.log('Boucle ' + i + ' Player' + this.number + ' mana : ' + this.mana + ' and maxMana : ' + this.maxMana);
         }
     };
 
@@ -284,7 +278,6 @@ function die(id) {
     }
 
     const deadCard = opponent.board.find(card => card.id == id);
-    console.log(deadCard);
     opponent.discardPile.push(deadCard);
     const newBoard = removeFromArray(opponent.board, deadCard);
     opponent.board = newBoard;
@@ -349,14 +342,8 @@ buttonStart.addEventListener('click', function () {
     healthStart2.innerHTML = MAX_HEALTH;
     healthStart2.parentElement.parentElement.setAttribute("data-id", 'player' + player2.number);
     player1.mana++;
-    /*player1.mana = player1.maxMana;*/
-    /*console.log(player1.maxMana);*/
-    player2.mana++;
-    /*player2.mana = player2.maxMana;*/
     player1.refreshGem();
     player2.refreshGem();
-    console.log("player 1 mana : " + player1.mana)
-    console.log("player 2 mana : " + player2.mana)
 
     // Draw the three first cards
     for (let i = 0; i < 3; i++) {
@@ -386,7 +373,6 @@ buttonStart.addEventListener('click', function () {
                 player1.refreshHand();
                 player1.refreshBoard();
             } else {
-                console.log('Coût de ' + cardHandToBoard.name + ' : ' + cardHandToBoard.cost);
                 console.log('Vous ne pouvez pas jouer cette carte, vous n\'avez pas assez de mana.')
             }
         }
