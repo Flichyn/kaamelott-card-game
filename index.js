@@ -29,6 +29,7 @@ class Card {
                 this.hasAttacked = true;
             } else if (enemy instanceof Player) {
                 enemy.health -= this.strength;
+                enemy.health = enemy.health <= 0 ? 0 : enemy.health;
                 createPop(`${this.name} attaque ${enemy.name} et lui retire ${this.strength} PV.`);
                 const newPV = document.querySelector(".player-pv" + enemy.number);
                 newPV.innerHTML = enemy.health;
@@ -97,7 +98,7 @@ class Player {
 
     isAlive() {
         if (this.health <= 0) {
-            return false
+            return endGame(this);
         };
     }
 
@@ -186,8 +187,9 @@ class Player {
         const opponent = (turn === 1 ? player2 : player1);
         if (this.maxMana < 10) {
             this.maxMana++;
-            this.mana = opponent.maxMana;
+            this.mana = this.maxMana;
             this.refreshGem();
+            this.board.forEach((card) => card.hasAttacked = false);
         }        
     }
 
@@ -299,7 +301,23 @@ function die(id) {
     opponent.refreshBoard();
 }
 
-//Mise en place du bouton fin de tours
+function endGame(player) {
+    const boardPlayer1 = document.querySelector('.board-player1');
+    const boardPlayer2 = document.querySelector('.board-player2');
+    const handPlayer1 = document.querySelector('.hand-player1');
+    const handPlayer2 = document.querySelector('.hand-player2');
+    
+    boardPlayer1.classList.toggle('no-events');
+    boardPlayer2.classList.toggle('no-events');
+    handPlayer1.classList.toggle('no-events');
+    handPlayer2.classList.toggle('no-events');
+    buttonFinish.setAttribute("disabled", true);
+
+    // Faire un createPop() un peu modifié ? + bouton pour relancer une partie
+    return `${player.name} a gagné la partie !`
+}
+
+// Mise en place du bouton fin de tour
 let turn = 1;
 const cardFinish1 = document.querySelector(".hand-player" + (turn === 1 ? '1' : '2'));
 const cardFinish2 = document.querySelector("#player-" + (turn === 1 ? '1' : '2'));
