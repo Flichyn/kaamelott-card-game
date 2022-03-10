@@ -44,7 +44,6 @@ class Card {
 
 // Player class constructor
 const MAX_HEALTH = 20;
-const MANA = 0;
 const deck1 = [
     new Card(1, 'Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
     new Card(2, 'Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
@@ -85,7 +84,8 @@ class Player {
     constructor(name, deck, number) {
         this.name = name;
         this.health = MAX_HEALTH;
-        this.mana = MANA;
+        this.mana = 0;
+        this.maxMana = 0;
         this.deck = deck;
         this.number = number
         this.hand = [];
@@ -165,7 +165,29 @@ class Player {
         const healthPoints = document.querySelector('player-pv' + player.number);
         healthPoints.innerHTML = player.health;
     }
-         
+     
+    endTurn() {
+        const opponent = (turn === 1 ? player2 : player1);
+        if ( opponent.maxMana < 10){
+            opponent.maxMana++;
+            this.refreshGem();
+        }  
+        opponent.mana = opponent.maxMana;
+        console.log("player " + opponent.number + ":" + opponent.mana)
+       
+        
+    }
+
+    refreshGem() {
+        const player = (turn === 1 ? player1 : player2);
+        const gemPoint = document.querySelector('.mana-player' + player.number);
+        const gemIcon = document.createElement('img');
+        gemIcon.src = "images/gem.svg";
+        for (let i = 0; i < player.mana; i++){
+            gemPoint.appendChild(gemIcon);
+        }
+    };
+
   
 }
 
@@ -248,13 +270,17 @@ const buttonFinish = document.querySelector("#button-finish");
             cardFinish1.style.filter = "grayscale(100%)";
             cardFinish2.style.filter = "grayscale(100%)";
             turn++;
-            buttonFinish.setAttribute("disabled", true);
+            /*buttonFinish.setAttribute("disabled", true);*/
+            player1.endTurn();
         } else {
             cardFinish1.style.filter = "grayscale(0%)";
             cardFinish2.style.filter = "grayscale(0%)";
             turn--;
+            player2.endTurn();
         }
     });
+
+ 
 
 // Mise en place des gemmes
 const manaGem1 = document.querySelector("#mana-player1");
@@ -290,7 +316,21 @@ buttonStart.addEventListener('click', function () {
     const healthStart2 = document.querySelector(".player-pv2");
     healthStart2.innerHTML = MAX_HEALTH;
     healthStart2.parentElement.parentElement.setAttribute("data-id", 'player' + player2.number);
-
+    player1.maxMana++;
+    player1.mana = player1.maxMana;
+    console.log(player1.maxMana);
+    player2.maxMana++;
+    player2.mana = player2.maxMana;
+    const gemPoint1 = document.querySelector('.mana-player1');
+    const gemIcon1 = document.createElement('img');
+    gemIcon1.src = "images/gem.svg";
+    gemPoint1.appendChild(gemIcon1);
+    const gemPoint2 = document.querySelector('.mana-player2');
+    const gemIcon2 = document.createElement('img');
+    gemIcon2.src = "images/gem.svg";
+    gemPoint2.appendChild(gemIcon2);
+    console.log("player 1 :" + player1.mana)
+    console.log("player 2 :" + player2.mana)
 
     // Draw the three first cards
     for (let i = 0; i < 3; i++) {
@@ -307,7 +347,7 @@ buttonStart.addEventListener('click', function () {
 
     // Ajout du listener pour jouer une carte sur le terrain
     const playerCardsInHand = document.querySelector('.hand-player1');
-
+    // Recherche ID d'une div selectionné pour pouvoir la resortir
     playerCardsInHand.addEventListener('click', event => {
         if (event.target && event.target.classList.value === "card") {
             const dataId = event.target.closest('.card').dataset.id;
