@@ -85,7 +85,7 @@ class Player {
         this.name = name;
         this.health = MAX_HEALTH;
         this.mana = 0;
-        this.maxMana = 0;
+        this.maxMana = 1;
         this.deck = deck;
         this.number = number
         this.hand = [];
@@ -139,6 +139,20 @@ class Player {
         
     }
 
+    useGems(cost) {
+        const availableMana = this.mana;
+        const cardCost = cost;
+
+        if (cardCost <= availableMana) {
+            this.mana -= cardCost;
+            this.refreshGem();
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     refreshHand() {
         const hand = this.hand;
         const handPlayer = document.querySelector('.hand-player' + this.number);
@@ -168,22 +182,27 @@ class Player {
      
     endTurn() {
         const opponent = (turn === 1 ? player2 : player1);
-        if ( opponent.maxMana < 10){
+        if (opponent.maxMana < 10) {
             opponent.maxMana++;
+            opponent.mana = opponent.maxMana;
             this.refreshGem();
-        }  
-        opponent.mana = opponent.maxMana;
-        console.log("player " + opponent.number + ":" + opponent.mana)
-       
-        
+        }        
     }
 
     refreshGem() {
-        const player = (turn === 1 ? player1 : player2);
-        const gemPoint = document.querySelector('.mana-player' + player.number);
-        const gemIcon = document.createElement('img');
+        let gemPoint = document.querySelector('.mana-player' + this.number);
+        let gemIcon = document.createElement('img');
         gemIcon.src = "images/gem.svg";
-        for (let i = 0; i < player.mana; i++){
+
+        while (gemPoint.firstChild) {
+            gemPoint.removeChild(gemPoint.firstChild);
+        }
+
+        const number = this.mana;
+
+        for (let i = 1; i <= number; i++){
+            let gemIcon = document.createElement('img');
+            gemIcon.src = "images/gem.svg";
             gemPoint.appendChild(gemIcon);
         }
     };
@@ -239,6 +258,13 @@ function createCard(card) {
     return newCard;
 }
 
+function removeFromArray(array, cardToRemove) { 
+    
+    return array.filter(function(card) { 
+        return card !== cardToRemove; 
+    });
+}
+
 function die(id) {
     let player;
     let opponent;
@@ -252,7 +278,6 @@ function die(id) {
     }
 
     const deadCard = opponent.board.find(card => card.id == id);
-    console.log(deadCard);
     opponent.discardPile.push(deadCard);
     const newBoard = removeFromArray(opponent.board, deadCard);
     opponent.board = newBoard;
@@ -316,21 +341,9 @@ buttonStart.addEventListener('click', function () {
     const healthStart2 = document.querySelector(".player-pv2");
     healthStart2.innerHTML = MAX_HEALTH;
     healthStart2.parentElement.parentElement.setAttribute("data-id", 'player' + player2.number);
-    player1.maxMana++;
-    player1.mana = player1.maxMana;
-    console.log(player1.maxMana);
-    player2.maxMana++;
-    player2.mana = player2.maxMana;
-    const gemPoint1 = document.querySelector('.mana-player1');
-    const gemIcon1 = document.createElement('img');
-    gemIcon1.src = "images/gem.svg";
-    gemPoint1.appendChild(gemIcon1);
-    const gemPoint2 = document.querySelector('.mana-player2');
-    const gemIcon2 = document.createElement('img');
-    gemIcon2.src = "images/gem.svg";
-    gemPoint2.appendChild(gemIcon2);
-    console.log("player 1 :" + player1.mana)
-    console.log("player 2 :" + player2.mana)
+    player1.mana++;
+    player1.refreshGem();
+    player2.refreshGem();
 
     // Draw the three first cards
     for (let i = 0; i < 3; i++) {
@@ -352,12 +365,16 @@ buttonStart.addEventListener('click', function () {
         if (event.target && event.target.classList.value === "card") {
             const dataId = event.target.closest('.card').dataset.id;
             const cardHandToBoard = player1.hand.find(card => card.id == dataId);
-            player1.board.push(cardHandToBoard);
-            let newHand = removeFromArray(player1.hand, cardHandToBoard);
+            if (player1.useGems(cardHandToBoard.cost)) {
+                player1.board.push(cardHandToBoard);
+                let newHand = removeFromArray(player1.hand, cardHandToBoard);
 
-            player1.hand = newHand;
-            player1.refreshHand();
-            player1.refreshBoard();
+                player1.hand = newHand;
+                player1.refreshHand();
+                player1.refreshBoard();
+            } else {
+                console.log('Vous ne pouvez pas jouer cette carte, vous n\'avez pas assez de mana.')
+            }
         }
     })
 
@@ -415,10 +432,3 @@ buttonStart.addEventListener('click', function () {
 // Créer les contraintes de coûts (mana, conditions pour jouer une carte...)
 
 // Créer les fonctions pour récupérer les valeurs
-
-function removeFromArray(array, cardToRemove) { 
-    
-    return array.filter(function(card) { 
-        return card !== cardToRemove; 
-    });
-}
