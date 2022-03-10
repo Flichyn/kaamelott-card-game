@@ -182,9 +182,9 @@ class Player {
      
     endTurn() {
         const opponent = (turn === 1 ? player2 : player1);
-        if (opponent.maxMana < 10) {
-            opponent.maxMana++;
-            opponent.mana = opponent.maxMana;
+        if (this.maxMana < 10) {
+            this.maxMana++;
+            this.mana = opponent.maxMana;
             this.refreshGem();
         }        
     }
@@ -198,9 +198,7 @@ class Player {
             gemPoint.removeChild(gemPoint.firstChild);
         }
 
-        const number = this.mana;
-
-        for (let i = 1; i <= number; i++){
+        for (let i = 1; i <= this.mana; i++){
             let gemIcon = document.createElement('img');
             gemIcon.src = "images/gem.svg";
             gemPoint.appendChild(gemIcon);
@@ -291,7 +289,7 @@ const cardFinish2 = document.querySelector("#player-1");
 const buttonFinish = document.querySelector("#button-finish");
 
     buttonFinish.addEventListener("click", function(){
-        if (turn == 1){
+        if (turn == 1) {
             cardFinish1.style.filter = "grayscale(100%)";
             cardFinish2.style.filter = "grayscale(100%)";
             turn++;
@@ -342,6 +340,7 @@ buttonStart.addEventListener('click', function () {
     healthStart2.innerHTML = MAX_HEALTH;
     healthStart2.parentElement.parentElement.setAttribute("data-id", 'player' + player2.number);
     player1.mana++;
+    player2.mana++;
     player1.refreshGem();
     player2.refreshGem();
 
