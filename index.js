@@ -59,9 +59,9 @@ const deck1 = [
 ];
 
 const deck2 = [
-    new Card(1, 'Perceval', 7, 2, 3, 5, 'images/perceval.webp'),
-    new Card(2, 'Arthur', 7, 4, 4, 5, 'images/arthur.jpg'),
-    new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
+    new Card(1, 'Perceval', 7, 2, 3, 1, 'images/perceval.webp'),
+    new Card(2, 'Arthur', 7, 4, 4, 1, 'images/arthur.jpg'),
+    new Card(3, 'Léodagan', 10, 7, 2, 1, 'images/leodagan.webp'),
     new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 5, 'images/duc-aquitaine.png'),
     new Card(5, 'Lancelot', 4, 8, 3, 5, 'images/lancelot.png'),
 ];
@@ -220,77 +220,6 @@ function turnCardsPlayer2() {
     cardFront.forEach((card) => card.style.transform = 'rotateY(180deg)');
 }
 
-function createPop(message) {
-    const popUp = document.querySelector(".pop-up-container");
-
-    while(popUp.firstChild) {
-        popUp.removeChild(popUp.firstChild);
-    }
-
-    const divPop = document.createElement("div");
-    divPop.classList.add("popUp");
-    popUp.appendChild(divPop);
-
-    const newPop = document.createElement('p');
-    newPop.innerHTML= message;
-    divPop.appendChild(newPop);
-
-    const imgPop = document.createElement('img');
-    imgPop.src = "images/logoKaamelott.png";
-    imgPop.classList.add('logo-kaamelott');
-    divPop.appendChild(imgPop);
-
-    setTimeout(() => popUp.removeChild(popUp.firstChild), 3000);
-}
-
-function createCard(card) {
-    // Create HTML tags and add classes
-    const newCard = document.createElement('div');
-    newCard.classList.add('card');
-
-    const cardInner = document.createElement('div');
-    cardInner.classList.add('card-inner');
-    newCard.appendChild(cardInner);
-
-    const cardBack = document.createElement('div');
-    cardBack.classList.add('card-back');
-    cardInner.appendChild(cardBack);
-
-    const cardFront = document.createElement('div');
-    cardFront.classList.add('card-front');
-    cardInner.appendChild(cardFront);
-
-    const cardIcons = document.createElement('div');
-    cardIcons.classList.add('card-icons');
-    cardFront.appendChild(cardIcons);
-
-    const heartIcon = document.createElement('div');
-    heartIcon.classList.add('heart');
-    cardIcons.appendChild(heartIcon);
-
-    const weaponIcon = document.createElement('div');
-    weaponIcon.classList.add('weapon');
-    cardIcons.appendChild(weaponIcon);
-
-    const shieldIcon = document.createElement('div');
-    shieldIcon.classList.add('shield');
-    cardIcons.appendChild(shieldIcon);
-
-    const gemIcon = document.createElement('div');
-    gemIcon.classList.add('gem');
-    cardIcons.appendChild(gemIcon);
-
-    // Add data to HTML elements
-    heartIcon.innerHTML = card.health;
-    weaponIcon.innerHTML = card.strength;
-    shieldIcon.innerHTML = card.shield;
-    gemIcon.innerHTML = card.cost;
-    cardFront.style.backgroundImage = 'url(' + card.image + ')';
-    newCard.setAttribute('data-id', card.id);
-
-    return newCard;
-}
-
 function removeFromArray(array, cardToRemove) { 
     
     return array.filter(function(card) { 
@@ -317,21 +246,6 @@ function die(id) {
     opponent.refreshBoard();
 }
 
-function endGame(winner) {
-    const boardPlayer1 = document.querySelector('.board-player1');
-    const boardPlayer2 = document.querySelector('.board-player2');
-    const handPlayer1 = document.querySelector('.hand-player1');
-    const handPlayer2 = document.querySelector('.hand-player2');
-    
-    boardPlayer1.classList.toggle('no-events');
-    boardPlayer2.classList.toggle('no-events');
-    handPlayer1.classList.toggle('no-events');
-    handPlayer2.classList.toggle('no-events');
-    buttonFinish.setAttribute("disabled", true);
-
-    // Faire un createPop() un peu modifié ? + bouton pour relancer une partie
-    return console.log(`${winner.name} a gagné la partie !`);
-}
 
 // Mise en place du bouton fin de tour
 let turn = 1;
@@ -366,8 +280,6 @@ buttonFinish.addEventListener("click", function(){
     }
 });
 
- 
-
 // Mise en place des gemmes
 const manaGem1 = document.querySelector("#mana-player1");
 const manaGem2 = document.querySelector("#mana-player2");
@@ -381,6 +293,7 @@ startGame.style.position = "absolute";
 startGame.style.display = "flex";
 startGame.style.justifyContent = "center";
 startGame.style.alignItems = "center";
+
 
 const gameBoard = document.querySelector('#game-board');
 const buttonStart = document.querySelector('#button-start');
@@ -432,6 +345,50 @@ buttonStart.addEventListener('click', function () {
     turnContainer.innerHTML = `Tour de ${turn === 1 ? player1.name : player2.name}`
 });
 
+// Fin de jeu
+function endGame(winner) {
+    const boardPlayer1 = document.querySelector('.board-player1');
+    const boardPlayer2 = document.querySelector('.board-player2');
+    const handPlayer1 = document.querySelector('.hand-player1');
+    const handPlayer2 = document.querySelector('.hand-player2');
+    
+    boardPlayer1.classList.toggle('no-events');
+    boardPlayer2.classList.toggle('no-events');
+    handPlayer1.classList.toggle('no-events');
+    handPlayer2.classList.toggle('no-events');
+    buttonFinish.setAttribute("disabled", true);
+
+    const gameBoardEnd = document.querySelector('#game-board');
+    const endGame = document.querySelector('.pop-up-container-end-game ');
+    endGame.style.backgroundImage = "url('background.webp')";
+    endGame.style.display = "flex";
+    
+    var duration = 15 * 1000;
+    var animationEnd = Date.now() + duration;
+    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+    }
+
+    var interval = setInterval(function() {
+    var timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+        return clearInterval(interval);
+    }
+
+    var particleCount = 50 * (timeLeft / duration);
+    // since particles fall down, start a bit higher than random
+    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }, 250);
+    engGamePop(`${winner.name} a gagné la partie !`);
+    return "";
+}
+
+
+
 // Ajout du listener pour jouer une carte sur le terrain
 const playerCardsInHand = document.querySelector('.hand-player1');
 // Recherche ID d'une div selectionné pour pouvoir la resortir
@@ -481,7 +438,7 @@ playerCardsOnBoard.addEventListener('click', event => {
             if (event.target && event.target.classList.value === "card") {
                 const dataId = event.target.closest('.card').dataset.id;
                 const cardDefender = player2.board.find(card => card.id == dataId);
-
+                
                 cardAttacker.attack(cardDefender);
                 player2.refreshBoard();
             }
@@ -569,4 +526,153 @@ async function computerTurn() {
         buttonFinish.removeAttribute("disabled");
         player1.drawCard();
     }
+    
 }
+
+/*const colors = [ '#ffc000', '#ff3b3b', '#ff8400' ];
+const bubbles = 25;
+
+const explode = (x, y) => {
+    let particles = [];
+    let ratio = window.devicePixelRatio;
+    let c = document.createElement('canvas');
+    let ctx = c.getContext('2d');
+
+    c.style.position = 'absolute';
+    c.style.left = (x - 100) + 'px';
+    c.style.top = (y - 100) + 'px';
+    c.style.pointerEvents = 'none';
+    c.style.width = 200 + 'px';
+    c.style.height = 200 + 'px';
+    c.style.zIndex = 100;
+    c.width = 200 * ratio;
+    c.height = 200 * ratio;
+    document.body.appendChild(c);
+
+    for(var i = 0; i < bubbles; i++) {
+        particles.push({
+            x: c.width / 2,
+            y: c.height / 2,
+            radius: r(20, 30),
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: r(0, 360, true),
+            speed: r(8, 12),
+            friction: 0.9,
+            opacity: r(0, 0.5, true),
+            yVel: 0,
+            gravity: 0.1
+        });
+    }
+
+    render(particles, ctx, c.width, c.height);
+    setTimeout(() => document.body.removeChild(c), 1000);
+}
+
+const render = (particles, ctx, width, height) => {
+    requestAnimationFrame(() => render(particles, ctx, width, height));
+    ctx.clearRect(0, 0, width, height);
+
+    particles.forEach((p, i) => {
+        p.x += p.speed * Math.cos(p.rotation * Math.PI / 180);
+        p.y += p.speed * Math.sin(p.rotation * Math.PI / 180);
+
+        p.opacity -= 0.01;
+        p.speed *= p.friction;
+        p.radius *= p.friction;
+        p.yVel += p.gravity;
+        p.y += p.yVel;
+
+        if(p.opacity < 0 || p.radius < 0) return;
+
+        ctx.beginPath();
+        ctx.globalAlpha = p.opacity;
+        ctx.fillStyle = p.color;
+        ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI, false);
+        ctx.fill();
+    });
+
+    return ctx;
+}
+
+const r = (a, b, c) => parseFloat((Math.random() * ((a ? a : 1) - (b ? b : 0)) + (b ? b : 0)).toFixed(c ? c : 0));
+
+document.querySelector(".card").addEventListener('click', e => explode(e.pageX, e.pageY));*/
+
+function createPop(message) {
+    const popUp = document.querySelector(".pop-up-container");
+
+    while(popUp.firstChild) {
+        popUp.removeChild(popUp.firstChild);
+    }
+
+    const divPop = document.createElement("div");
+    divPop.classList.add("popUp");
+    popUp.appendChild(divPop);
+
+    const newPop = document.createElement('p');
+    newPop.innerHTML= message;
+    divPop.appendChild(newPop);
+
+    const imgPop = document.createElement('img');
+    imgPop.src = "images/logoKaamelott.png";
+    imgPop.classList.add('logo-kaamelott');
+    divPop.appendChild(imgPop);
+
+    setTimeout(() => popUp.removeChild(popUp.firstChild), 3000);
+}
+
+function engGamePop(message) {
+    const textWinner = document.querySelector(".text-winner");
+    textWinner.innerHTML= message;
+    
+
+}
+
+function createCard(card) {
+    // Create HTML tags and add classes
+    const newCard = document.createElement('div');
+    newCard.classList.add('card');
+
+    const cardInner = document.createElement('div');
+    cardInner.classList.add('card-inner');
+    newCard.appendChild(cardInner);
+
+    const cardBack = document.createElement('div');
+    cardBack.classList.add('card-back');
+    cardInner.appendChild(cardBack);
+
+    const cardFront = document.createElement('div');
+    cardFront.classList.add('card-front');
+    cardInner.appendChild(cardFront);
+
+    const cardIcons = document.createElement('div');
+    cardIcons.classList.add('card-icons');
+    cardFront.appendChild(cardIcons);
+
+    const weaponIcon = document.createElement('div');
+    weaponIcon.classList.add('weapon');
+    cardIcons.appendChild(weaponIcon);
+
+    const shieldIcon = document.createElement('div');
+    shieldIcon.classList.add('shield');
+    cardIcons.appendChild(shieldIcon);
+
+    const heartIcon = document.createElement('div');
+    heartIcon.classList.add('heart');
+    cardIcons.appendChild(heartIcon);
+
+    const gemIcon = document.createElement('div');
+    gemIcon.classList.add('gem');
+    cardIcons.appendChild(gemIcon);
+
+    // Add data to HTML elements
+    heartIcon.innerHTML = card.health;
+    weaponIcon.innerHTML = card.strength;
+    shieldIcon.innerHTML = card.shield;
+    gemIcon.innerHTML = card.cost;
+    cardFront.style.backgroundImage = 'url(' + card.image + ')';
+    newCard.setAttribute('data-id', card.id);
+
+    return newCard;
+}
+
