@@ -264,6 +264,10 @@ function createCard(card) {
     cardIcons.classList.add('card-icons');
     cardFront.appendChild(cardIcons);
 
+    const heartIcon = document.createElement('div');
+    heartIcon.classList.add('heart');
+    cardIcons.appendChild(heartIcon);
+
     const weaponIcon = document.createElement('div');
     weaponIcon.classList.add('weapon');
     cardIcons.appendChild(weaponIcon);
@@ -271,10 +275,6 @@ function createCard(card) {
     const shieldIcon = document.createElement('div');
     shieldIcon.classList.add('shield');
     cardIcons.appendChild(shieldIcon);
-
-    const heartIcon = document.createElement('div');
-    heartIcon.classList.add('heart');
-    cardIcons.appendChild(heartIcon);
 
     const gemIcon = document.createElement('div');
     gemIcon.classList.add('gem');
@@ -470,7 +470,7 @@ playerCardsInHand2.addEventListener('click', event => {
 // Ajout du listener pour attaquer une carte adverse
 const playerCardsOnBoard = document.querySelector('.board-player1');
 const enemyCardsOnBoard = document.querySelector('.board-player2');
-const opponent = document.querySelector('#player-' + (turn === 1 ? '2' : '1'));
+const opponent = document.querySelector('#player-2');
 
 playerCardsOnBoard.addEventListener('click', event => {
     if (event.target && event.target.classList.value === "card") {
@@ -502,8 +502,6 @@ playerCardsOnBoard.addEventListener('click', event => {
             }
         })
     }
-
-    console.log(event);
 })
 
 function sleep(ms) {
@@ -571,5 +569,4 @@ async function computerTurn() {
         buttonFinish.removeAttribute("disabled");
         player1.drawCard();
     }
-    
 }
