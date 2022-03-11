@@ -31,8 +31,9 @@ class Card {
                 enemy.health -= this.strength;
                 enemy.health = enemy.health <= 0 ? 0 : enemy.health;
                 createPop(`${this.name} attaque ${enemy.name} et lui retire ${this.strength} PV.`);
-                const newPV = document.querySelector(".player-pv" + enemy.number);
-                newPV.innerHTML = enemy.health;
+                enemy.refreshHealth();
+                /*const newPV = document.querySelector(".player-pv" + enemy.number);
+                newPV.innerHTML = enemy.health;*/
                 this.hasAttacked = true;
             }
         }
@@ -41,6 +42,8 @@ class Card {
     isAlive() {
         if (this.health > 0) {
             return true;
+        } else {
+            return false;
         }
     }
 }
@@ -56,11 +59,11 @@ const deck1 = [
 ];
 
 const deck2 = [
-    new Card(1, 'Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
-    new Card(2, 'Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
+    new Card(1, 'Perceval', 7, 2, 3, 5, 'images/perceval.webp'),
+    new Card(2, 'Arthur', 7, 4, 4, 5, 'images/arthur.jpg'),
     new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
-    new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),
-    new Card(5, 'Lancelot', 4, 8, 3, 4, 'images/lancelot.png'),
+    new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 5, 'images/duc-aquitaine.png'),
+    new Card(5, 'Lancelot', 4, 8, 3, 5, 'images/lancelot.png'),
 ];
 
 // POUR PLUS TARD
@@ -98,8 +101,9 @@ class Player {
 
     isAlive() {
         if (this.health <= 0) {
-            return endGame(this);
-        };
+            endGame((this === player1 ? player2 : player1))
+            return false;
+        }
     }
 
     isHandFull() {
@@ -178,19 +182,20 @@ class Player {
     }
 
     refreshHealth() {
-        const player = (turn === 1 ? player2 : player1);
-        const healthPoints = document.querySelector('player-pv' + player.number);
-        healthPoints.innerHTML = player.health;
+        const healthPoints = document.querySelector('.player-pv' + this.number);
+        healthPoints.innerHTML = this.health;
     }
      
     endTurn() {
         const opponent = (turn === 1 ? player2 : player1);
+
         if (this.maxMana < 10) {
             this.maxMana++;
-            this.mana = this.maxMana;
-            this.refreshGem();
-            this.board.forEach((card) => card.hasAttacked = false);
-        }        
+        }
+
+        this.mana = this.maxMana;
+        this.refreshGem();
+        this.board.forEach((card) => card.hasAttacked = false);
     }
 
     refreshGem() {
@@ -208,11 +213,20 @@ class Player {
             gemPoint.appendChild(gemIcon);
         }
     };
-
-  
 }
-const popUp = document.querySelector(".container");
+
+function turnCardsPlayer2() {
+    const cardFront = document.querySelectorAll('.hand-player2 .card-front');
+    cardFront.forEach((card) => card.style.transform = 'rotateY(180deg)');
+}
+
 function createPop(message) {
+    const popUp = document.querySelector(".pop-up-container");
+
+    while(popUp.firstChild) {
+        popUp.removeChild(popUp.firstChild);
+    }
+
     const divPop = document.createElement("div");
     divPop.classList.add("popUp");
     popUp.appendChild(divPop);
@@ -225,6 +239,8 @@ function createPop(message) {
     imgPop.src = "images/logoKaamelott.png";
     imgPop.classList.add('logo-kaamelott');
     divPop.appendChild(imgPop);
+
+    setTimeout(() => popUp.removeChild(popUp.firstChild), 3000);
 }
 
 function createCard(card) {
@@ -301,7 +317,7 @@ function die(id) {
     opponent.refreshBoard();
 }
 
-function endGame(player) {
+function endGame(winner) {
     const boardPlayer1 = document.querySelector('.board-player1');
     const boardPlayer2 = document.querySelector('.board-player2');
     const handPlayer1 = document.querySelector('.hand-player1');
@@ -314,39 +330,41 @@ function endGame(player) {
     buttonFinish.setAttribute("disabled", true);
 
     // Faire un createPop() un peu modifié ? + bouton pour relancer une partie
-    return `${player.name} a gagné la partie !`
+    return console.log(`${winner.name} a gagné la partie !`);
 }
 
 // Mise en place du bouton fin de tour
 let turn = 1;
-const cardFinish1 = document.querySelector(".hand-player" + (turn === 1 ? '1' : '2'));
-const cardFinish2 = document.querySelector("#player-" + (turn === 1 ? '1' : '2'));
-const buttonFinish = document.querySelector("#button-finish");
-const boardPlayer = document.querySelector('.board-player' + (turn === 1 ? '1' : '2'));
-const handPlayer = document.querySelector('.hand-player' + (turn === 1 ? '1' : '2'));
-console.log(boardPlayer)
 
-    buttonFinish.addEventListener("click", function(){
-        if (turn == 1) {
-            cardFinish1.style.filter = "grayscale(100%)";
-            cardFinish2.style.filter = "grayscale(100%)";
-            boardPlayer.classList.toggle('no-events');
-            handPlayer.classList.toggle('no-events');
-            turn++;
-            /*buttonFinish.setAttribute("disabled", true);*/
-            player1.endTurn();
-            player2.drawCard();
-            // INSÉRER FONCTION IA
-        } else {
-            cardFinish1.style.filter = "grayscale(0%)";
-            cardFinish2.style.filter = "grayscale(0%)";
-            boardPlayer.classList.toggle('no-events');
-            handPlayer.classList.toggle('no-events');
-            turn--;
-            player2.endTurn();
-            player1.drawCard();
-        }
-    });
+const buttonFinish = document.querySelector("#button-finish");
+
+const containerPlayer1 = document.querySelector("#player-1");
+const boardContainerPlayer1 = document.querySelector('.board-player1');
+const handContainerPlayer1 = document.querySelector('.hand-player1');
+
+const boardContainerPlayer2 = document.querySelector('.board-player2');
+const handContainerPlayer2 = document.querySelector('.hand-player2');
+
+buttonFinish.addEventListener("click", function(){
+    if (turn == 1) {
+        handContainerPlayer1.classList.toggle('no-events');
+        boardContainerPlayer1.classList.toggle('no-events');
+        turn++;
+        buttonFinish.setAttribute("disabled", true);
+        player1.endTurn();
+
+        turnContainer.innerHTML = `Tour de ${turn === 1 ? player1.name : player2.name}`
+        player2.drawCard();
+        turnCardsPlayer2();
+        computerTurn();
+    } else {
+        boardContainerPlayer2.classList.toggle('no-events');
+        handContainerPlayer2.classList.toggle('no-events');
+        turn--;
+        player2.endTurn();
+        player1.drawCard();
+    }
+});
 
  
 
@@ -366,6 +384,7 @@ startGame.style.alignItems = "center";
 
 const gameBoard = document.querySelector('#game-board');
 const buttonStart = document.querySelector('#button-start');
+const turnContainer = document.querySelector('.turn');
 
 let player1;
 let player2;
@@ -374,18 +393,24 @@ let player2;
 buttonStart.addEventListener('click', function () {
     startGame.style.display = "none";
     gameBoard.style.display = "block";
+
     player1 = new Player('Perceval', deck1, 1);
-    player2 = new Player('CPU', deck2, 2);
+    player2 = new Player('Karadoc', deck2, 2);
+
     player1.shuffle();
     player2.shuffle();
+
     const healthStart1 = document.querySelector(".player-pv1");
     healthStart1.innerHTML = MAX_HEALTH;
     healthStart1.parentElement.parentElement.setAttribute("data-id", 'player' + player1.number);
+
     const healthStart2 = document.querySelector(".player-pv2");
     healthStart2.innerHTML = MAX_HEALTH;
     healthStart2.parentElement.parentElement.setAttribute("data-id", 'player' + player2.number);
+
     player1.mana++;
     player2.mana++;
+
     player1.refreshGem();
     player2.refreshGem();
 
@@ -398,81 +423,153 @@ buttonStart.addEventListener('click', function () {
     // Display cards in hand
     player1.refreshHand();
     player2.refreshHand();
+
     player1.refreshBoard();
     player2.refreshBoard();
+
+    turnCardsPlayer2();
+
+    turnContainer.innerHTML = `Tour de ${turn === 1 ? player1.name : player2.name}`
 });
 
-    // Ajout du listener pour jouer une carte sur le terrain
-    const playerCardsInHand = document.querySelector('.hand-player1');
-    // Recherche ID d'une div selectionné pour pouvoir la resortir
-    playerCardsInHand.addEventListener('click', event => {
-        if (event.target && event.target.classList.value === "card") {
-            const dataId = event.target.closest('.card').dataset.id;
-            const cardHandToBoard = player1.hand.find(card => card.id == dataId);
-            if (player1.useGems(cardHandToBoard.cost)) {
-                player1.board.push(cardHandToBoard);
-                let newHand = removeFromArray(player1.hand, cardHandToBoard);
+// Ajout du listener pour jouer une carte sur le terrain
+const playerCardsInHand = document.querySelector('.hand-player1');
+// Recherche ID d'une div selectionné pour pouvoir la resortir
+playerCardsInHand.addEventListener('click', event => {
+    if (event.target && event.target.classList.value === "card") {
+        const dataId = event.target.closest('.card').dataset.id;
+        const cardHandToBoard = player1.hand.find(card => card.id == dataId);
+        if (player1.useGems(cardHandToBoard.cost)) {
+            player1.board.push(cardHandToBoard);
+            let newHand = removeFromArray(player1.hand, cardHandToBoard);
 
-                player1.hand = newHand;
-                player1.refreshHand();
-                player1.refreshBoard();
+            player1.hand = newHand;
+            player1.refreshHand();
+            player1.refreshBoard();
+        } else {
+            createPop('Vous ne pouvez pas jouer cette carte, vous n\'avez pas assez de mana.')
+        }
+    }
+})
+
+/*const playerCardsInHand2 = document.querySelector('.hand-player2');
+
+playerCardsInHand2.addEventListener('click', event => {
+    if (event.target && event.target.classList.value === "card") {
+        const dataId = event.target.closest('.card').dataset.id;
+        const cardHandToBoard = player2.hand.find(card => card.id == dataId);
+        player2.board.push(cardHandToBoard);
+        let newHand = removeFromArray(player2.hand, cardHandToBoard);
+
+        player2.hand = newHand;
+        player2.refreshHand();
+        player2.refreshBoard();
+    }
+})*/
+
+// Ajout du listener pour attaquer une carte adverse
+const playerCardsOnBoard = document.querySelector('.board-player1');
+const enemyCardsOnBoard = document.querySelector('.board-player2');
+const opponent = document.querySelector('#player-' + (turn === 1 ? '2' : '1'));
+
+playerCardsOnBoard.addEventListener('click', event => {
+    if (event.target && event.target.classList.value === "card") {
+        const dataId = event.target.closest('.card').dataset.id;
+        const cardAttacker = player1.board.find(card => card.id == dataId);
+        
+        enemyCardsOnBoard.addEventListener('click', event => {
+            if (event.target && event.target.classList.value === "card") {
+                const dataId = event.target.closest('.card').dataset.id;
+                const cardDefender = player2.board.find(card => card.id == dataId);
+
+                cardAttacker.attack(cardDefender);
+                player2.refreshBoard();
+            }
+        })
+
+        opponent.addEventListener('click', event => {
+            if (event.target && event.target.dataset.id === "player2") {
+                const dataId = event.target.closest('div').dataset.id;
+                const playerDefender = (dataId === 'player2' ? player2 : player1);
+                
+                if (playerDefender.board.length === 0) {
+                    cardAttacker.attack(playerDefender);
+                    player2.isAlive();
+                } else {
+                    createPop('Vous ne pouvez pas attaquer votre adversaire, car il lui reste des cartes sur son plateau.');
+                }
+                
+            }
+        })
+    }
+
+    console.log(event);
+})
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function computerTurn() {
+    const cardsInHand = player2.hand;
+    const cardsOnBoard = player2.board;
+    const boardPlayer1 = player1.board;
+    let winner;
+    
+    for (let i = 0; i < cardsInHand.length; i++) {
+        if (cardsInHand[i].cost <= player2.mana) {
+            console.log('Joue une carte dans 2s');
+            await sleep(2000);
+
+            if (player2.useGems(cardsInHand[i].cost)) {
+                player2.board.push(cardsInHand[i]);
+                let newHand = removeFromArray(cardsInHand, cardsInHand[i]);
+
+                player2.hand = newHand;
+                player2.refreshHand();
+                turnCardsPlayer2();
+                player2.refreshBoard();
+            } 
+        }
+    }
+
+    for (let i = 0; i < cardsOnBoard.length; i++) {
+        if (cardsOnBoard[i].hasAttacked === false) {
+            if (boardPlayer1.length > 0) {
+                randomNumber = Math.floor(Math.random() * boardPlayer1.length);
+                console.log('Effectue une attaque dans 2s');
+                await sleep(2000);
+                cardsOnBoard[i].attack(boardPlayer1[randomNumber]);
+                player1.refreshBoard(); 
             } else {
-                createPop('Vous ne pouvez pas jouer cette carte, vous n\'avez pas assez de mana.')
+                console.log('Effectue une attaque dans 2s');
+                await sleep(2000);
+                cardsOnBoard[i].attack(player1);
+                player1.refreshHealth();
+                if (player1.isAlive() === false) {
+                    winner = player2.name;
+                    break;
+                }              
             }
         }
-    })
+    }
 
-    const playerCardsInHand2 = document.querySelector('.hand-player2');
+    if (typeof winner === 'string') {
+        handContainerPlayer1.classList.toggle('no-events');
+        boardContainerPlayer1.classList.toggle('no-events');
+        
+    } else {
+        turn--;
+        handContainerPlayer1.classList.toggle('no-events');
+        boardContainerPlayer1.classList.toggle('no-events');
+        player2.endTurn();
 
-    playerCardsInHand2.addEventListener('click', event => {
-        if (event.target && event.target.classList.value === "card") {
-            const dataId = event.target.closest('.card').dataset.id;
-            const cardHandToBoard = player2.hand.find(card => card.id == dataId);
-            player2.board.push(cardHandToBoard);
-            let newHand = removeFromArray(player2.hand, cardHandToBoard);
-
-            player2.hand = newHand;
-            player2.refreshHand();
-            player2.refreshBoard();
-        }
-    })
-
-    // Ajout du listener pour attaquer une carte adverse
-    const playerCardsOnBoard = document.querySelector('.board-player1');
-    const enemyCardsOnBoard = document.querySelector('.board-player2');
-    const opponent = document.querySelector('#player-' + (turn === 1 ? '2' : '1'));
+        
+        console.log('Joueur 1 pioche dans 2s');
+        await sleep(2000);
+        turnContainer.innerHTML = `Tour de ${turn === 1 ? player1.name : player2.name}`
+        buttonFinish.removeAttribute("disabled");
+        player1.drawCard();
+    }
     
-    playerCardsOnBoard.addEventListener('click', event => {
-        if (event.target && event.target.classList.value === "card") {
-            const dataId = event.target.closest('.card').dataset.id;
-            const cardAttacker = player1.board.find(card => card.id == dataId);
-            
-            enemyCardsOnBoard.addEventListener('click', event => {
-                if (event.target && event.target.classList.value === "card") {
-                    const dataId = event.target.closest('.card').dataset.id;
-                    const cardDefender = player2.board.find(card => card.id == dataId);
-
-                    cardAttacker.attack(cardDefender);
-                    player2.refreshBoard();
-                }
-            })
-
-            opponent.addEventListener('click', event => {
-                if (event.target && event.target.dataset.id === "player2") {
-                    const dataId = event.target.closest('div').dataset.id;
-                    const playerDefender = (dataId === 'player2' ? player2 : player1);
-                    
-                    if (playerDefender.board.length === 0) {
-                        cardAttacker.attack(playerDefender);
-                    } else {
-                        createPop('Vous ne pouvez pas attaquer votre adversaire, car il lui reste des cartes sur son plateau.');
-                    }
-                    
-                }
-            })
-        }
-    })
-
-// Créer les contraintes de coûts (mana, conditions pour jouer une carte...)
-
-// Créer les fonctions pour récupérer les valeurs
+}
