@@ -428,7 +428,7 @@ buttonStart.addEventListener('click', function () {
         if (event.target && event.target.classList.value === "card") {
             const dataId = event.target.closest('.card').dataset.id;
             const cardAttacker = player1.board.find(card => card.id == dataId);
-            
+
             enemyCardsOnBoard.addEventListener('click', event => {
                 if (event.target && event.target.classList.value === "card") {
                     const dataId = event.target.closest('.card').dataset.id;
