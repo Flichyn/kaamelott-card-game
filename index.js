@@ -340,6 +340,8 @@ buttonStart.addEventListener('click', function () {
     const healthStart2 = document.querySelector(".player-pv2");
     healthStart2.innerHTML = MAX_HEALTH;
     healthStart2.parentElement.parentElement.setAttribute("data-id", 'player' + player2.number);
+    /*handContainerPlayer2.querySelectorAll('.card').classList.toggle('.no-events-player2');
+    boardContainerPlayer2.querySelectorAll('.card').classList.add('.no-events-player2');*/
 
     player1.mana++;
     player2.mana++;
@@ -444,6 +446,10 @@ playerCardsOnBoard.addEventListener('click', event => {
     if (event.target && event.target.classList.value === "card") {
         const dataId = event.target.closest('.card').dataset.id;
         cardAttacker = player1.board.find(card => card.id == dataId);
+        
+        /*for (let i = 0; i < player2.board.length; i++) {
+            boardContainerPlayer2.querySelectorAll('.board-player2 .card')[i].toggle('.no-events-player2');
+        }*/
     }
 })
 
