@@ -55,15 +55,8 @@ body {
     pointer-events: none;
 }
 
-.hand-player2 > .card:hover {
-    cursor: pointer;
-    position: relative;
-    top: 20px;
-}
-
 .card:hover {
     cursor: pointer;
-    position: relative;
 }
 
 /*.card:active {
@@ -218,6 +211,11 @@ body {
     justify-content: space-evenly;
 }
 
+.hand-player1 > .card:hover {
+    position: relative;
+    bottom: 10px;
+}
+
 .hand-player2 {
     display: flex;
     justify-content: space-evenly;
@@ -342,13 +340,11 @@ body {
 .board-player1 > .card:hover {
     cursor: pointer;
     position: relative;
-    bottom: 0px;
+    bottom: 10px;
 }
 
 .board-player2 > .card:hover {
     cursor: pointer;
-    position: relative;
-    bottom: 0px;
 }
 
 .no-events {

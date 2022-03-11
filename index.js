@@ -220,7 +220,6 @@ function turnCardsPlayer2() {
     cardFront.forEach((card) => card.style.transform = 'rotateY(180deg)');
 }
 
-
 function removeFromArray(array, cardToRemove) { 
     
     return array.filter(function(card) { 
@@ -428,7 +427,7 @@ playerCardsInHand2.addEventListener('click', event => {
 // Ajout du listener pour attaquer une carte adverse
 const playerCardsOnBoard = document.querySelector('.board-player1');
 const enemyCardsOnBoard = document.querySelector('.board-player2');
-const opponent = document.querySelector('#player-' + (turn === 1 ? '2' : '1'));
+const opponent = document.querySelector('#player-2');
 
 playerCardsOnBoard.addEventListener('click', event => {
     if (event.target && event.target.classList.value === "card") {
@@ -460,8 +459,6 @@ playerCardsOnBoard.addEventListener('click', event => {
             }
         })
     }
-
-    console.log(event);
 })
 
 function sleep(ms) {
@@ -678,3 +675,4 @@ function createCard(card) {
 
     return newCard;
 }
+
