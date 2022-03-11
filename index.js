@@ -56,21 +56,21 @@ const deck1 = [
     new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.jpg'),
     new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-d-aquitaine.jpg'),
     new Card(5, 'Lancelot', 4, 8, 3, 4, 'images/lancelot.jpg'),
-    new Card(6, 'Guenièvre', 1, 1, 1, 1, 'images/guenievre.jpg'),
-    new Card(7, 'Duchesse d\'Aquitaine', 1, 1, 1, 1, 'images/duchesse-d-aquitaine.jpg'),
-    new Card(8, 'Séli', 1, 1, 1, 1, 'images/seli.jpg'),
-    new Card(9, 'Bohort', 1, 1, 1, 1, 'images/bohort.jpg'),
-    new Card(10, 'Élias', 1, 1, 1, 1, 'images/elias.jpg'),
-    new Card(11, 'Merlin', 1, 1, 1, 1, 'images/merlin.jpg'),
-    new Card(12, 'La Dame du Lac', 1, 1, 1, 1, 'images/la-dame-du-lac.jpg'),
-    new Card(13, 'Loth', 1, 1, 1, 1, 'images/loth.jpg'),
-    new Card(14, 'Karadoc', 1, 1, 1, 1, 'images/karadoc.jpg'),
-    new Card(15, 'Dagonet', 1, 1, 1, 1, 'images/dagonet.jpg'),
-    new Card(16, 'Mevanwi', 1, 1, 1, 1, 'images/mevanwi.jpg'),
-    new Card(17, 'Venec', 1, 1, 1, 1, 'images/venec.jpg'),
-    new Card(18, 'Le Roi Burgonde', 1, 1, 1, 1, 'images/le-roi-burgonde.jpg'),
-    new Card(19, 'Méléagant', 1, 1, 1, 1, 'images/meleagant.jpg'),
-    new Card(20, 'Le Maître d\'Armes', 1, 1, 1, 1, 'images/maitre-d-armes.jpg'),
+    new Card(6, 'Guenièvre', 3, 2, 3, 2, 'images/guenievre.jpg'),
+    new Card(7, 'Duchesse d\'Aquitaine', 5, 1, 1, 1, 'images/duchesse-d-aquitaine.jpg'),
+    new Card(8, 'Séli', 6, 1, 1, 1, 'images/seli.jpg'),
+    new Card(9, 'Bohort', 4, 1, 1, 1, 'images/bohort.jpg'),
+    new Card(10, 'Élias', 6, 1, 1, 1, 'images/elias.jpg'),
+    new Card(11, 'Merlin', 4, 1, 1, 1, 'images/merlin.jpg'),
+    new Card(12, 'La Dame du Lac', 2, 1, 1, 1, 'images/la-dame-du-lac.jpg'),
+    new Card(13, 'Loth', 5, 1, 1, 1, 'images/loth.jpg'),
+    new Card(14, 'Karadoc', 7, 1, 1, 1, 'images/karadoc.jpg'),
+    new Card(15, 'Dagonet', 5, 1, 1, 1, 'images/dagonet.jpg'),
+    new Card(16, 'Mevanwi', 8, 1, 1, 1, 'images/mevanwi.jpg'),
+    new Card(17, 'Venec', 4, 1, 1, 1, 'images/venec.jpg'),
+    new Card(18, 'Le Roi Burgonde', 9, 6, 2, 5, 'images/le-roi-burgonde.jpg'),
+    new Card(19, 'Méléagant', 7, 6, 5, 1, 'images/meleagant.jpg'),
+    new Card(20, 'Le Maître d\'Armes', 8, 8, 4, 5, 'images/maitre-d-armes.jpg'),
 ];
 
 const deck2 = [
@@ -81,13 +81,13 @@ const deck2 = [
     new Card(5, 'Lancelot', 4, 8, 3, 5, 'images/lancelot.jpg'),
     new Card(6, 'Guenièvre', 1, 1, 1, 1, 'images/guenievre.jpg'),
     new Card(7, 'Duchesse d\'Aquitaine', 1, 1, 1, 1, 'images/duchesse-d-aquitaine.jpg'),
-    new Card(8, 'Séli', 1, 1, 1, 1, 'images/seli.jpg'),
-    new Card(9, 'Bohort', 1, 1, 1, 1, 'images/bohort.jpg'),
-    new Card(10, 'Élias', 1, 1, 1, 1, 'images/elias.jpg'),
-    new Card(11, 'Merlin', 1, 1, 1, 1, 'images/merlin.jpg'),
-    new Card(12, 'La Dame du Lac', 1, 1, 1, 1, 'images/la-dame-du-lac.jpg'),
-    new Card(13, 'Loth', 1, 1, 1, 1, 'images/loth.jpg'),
-    new Card(14, 'Karadoc', 1, 1, 1, 1, 'images/karadoc.jpg'),
+    new Card(8, 'Séli', 4, 1, 1, 1, 'images/seli.jpg'),
+    new Card(9, 'Bohort', 4, 1, 1, 1, 'images/bohort.jpg'),
+    new Card(10, 'Élias', 4, 1, 1, 1, 'images/elias.jpg'),
+    new Card(11, 'Merlin', 4, 1, 1, 1, 'images/merlin.jpg'),
+    new Card(12, 'La Dame du Lac', 4, 1, 1, 1, 'images/la-dame-du-lac.jpg'),
+    new Card(13, 'Loth', 4, 1, 1, 1, 'images/loth.jpg'),
+    new Card(14, 'Karadoc', 4, 1, 1, 1, 'images/karadoc.jpg'),
     new Card(15, 'Dagonet', 1, 1, 1, 1, 'images/dagonet.jpg'),
     new Card(16, 'Mevanwi', 1, 1, 1, 1, 'images/mevanwi.jpg'),
     new Card(17, 'Venec', 1, 1, 1, 1, 'images/venec.jpg'),
@@ -446,10 +446,6 @@ playerCardsOnBoard.addEventListener('click', event => {
     if (event.target && event.target.classList.value === "card") {
         const dataId = event.target.closest('.card').dataset.id;
         cardAttacker = player1.board.find(card => card.id == dataId);
-        
-        /*for (let i = 0; i < player2.board.length; i++) {
-            boardContainerPlayer2.querySelectorAll('.board-player2 .card')[i].toggle('.no-events-player2');
-        }*/
     }
 })
 
