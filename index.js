@@ -51,40 +51,50 @@ class Card {
 // Player class constructor
 const MAX_HEALTH = 20;
 const deck1 = [
-    new Card(1, 'Perceval', 7, 2, 3, 2, 'images/perceval.webp'),
+    new Card(1, 'Perceval', 7, 2, 3, 2, 'images/perceval.jpg'),
     new Card(2, 'Arthur', 7, 4, 4, 4, 'images/arthur.jpg'),
-    new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
-    new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-aquitaine.png'),
-    new Card(5, 'Lancelot', 4, 8, 3, 4, 'images/lancelot.png'),
+    new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.jpg'),
+    new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 3, 'images/duc-d-aquitaine.jpg'),
+    new Card(5, 'Lancelot', 4, 8, 3, 4, 'images/lancelot.jpg'),
+    new Card(6, 'Guenièvre', 1, 1, 1, 1, 'images/guenievre.jpg'),
+    new Card(7, 'Duchesse d\'Aquitaine', 1, 1, 1, 1, 'images/duchesse-d-aquitaine.jpg'),
+    new Card(8, 'Séli', 1, 1, 1, 1, 'images/seli.jpg'),
+    new Card(9, 'Bohort', 1, 1, 1, 1, 'images/bohort.jpg'),
+    new Card(10, 'Élias', 1, 1, 1, 1, 'images/elias.jpg'),
+    new Card(11, 'Merlin', 1, 1, 1, 1, 'images/merlin.jpg'),
+    new Card(12, 'La Dame du Lac', 1, 1, 1, 1, 'images/la-dame-du-lac.jpg'),
+    new Card(13, 'Loth', 1, 1, 1, 1, 'images/loth.jpg'),
+    new Card(14, 'Karadoc', 1, 1, 1, 1, 'images/karadoc.jpg'),
+    new Card(15, 'Dagonet', 1, 1, 1, 1, 'images/dagonet.jpg'),
+    new Card(16, 'Mevanwi', 1, 1, 1, 1, 'images/mevanwi.jpg'),
+    new Card(17, 'Venec', 1, 1, 1, 1, 'images/venec.jpg'),
+    new Card(18, 'Le Roi Burgonde', 1, 1, 1, 1, 'images/le-roi-burgonde.jpg'),
+    new Card(19, 'Méléagant', 1, 1, 1, 1, 'images/meleagant.jpg'),
+    new Card(20, 'Le Maître d\'Armes', 1, 1, 1, 1, 'images/maitre-d-armes.jpg'),
 ];
 
 const deck2 = [
-    new Card(1, 'Perceval', 7, 2, 3, 5, 'images/perceval.webp'),
+    new Card(1, 'Perceval', 7, 2, 3, 5, 'images/perceval.jpg'),
     new Card(2, 'Arthur', 7, 4, 4, 5, 'images/arthur.jpg'),
-    new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.webp'),
-    new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 5, 'images/duc-aquitaine.png'),
-    new Card(5, 'Lancelot', 4, 8, 3, 5, 'images/lancelot.png'),
+    new Card(3, 'Léodagan', 10, 7, 2, 5, 'images/leodagan.jpg'),
+    new Card(4, 'Duc d\'Aquitaine', 5, 2, 4, 5, 'images/duc-d-aquitaine.jpg'),
+    new Card(5, 'Lancelot', 4, 8, 3, 5, 'images/lancelot.jpg'),
+    new Card(6, 'Guenièvre', 1, 1, 1, 1, 'images/guenievre.jpg'),
+    new Card(7, 'Duchesse d\'Aquitaine', 1, 1, 1, 1, 'images/duchesse-d-aquitaine.jpg'),
+    new Card(8, 'Séli', 1, 1, 1, 1, 'images/seli.jpg'),
+    new Card(9, 'Bohort', 1, 1, 1, 1, 'images/bohort.jpg'),
+    new Card(10, 'Élias', 1, 1, 1, 1, 'images/elias.jpg'),
+    new Card(11, 'Merlin', 1, 1, 1, 1, 'images/merlin.jpg'),
+    new Card(12, 'La Dame du Lac', 1, 1, 1, 1, 'images/la-dame-du-lac.jpg'),
+    new Card(13, 'Loth', 1, 1, 1, 1, 'images/loth.jpg'),
+    new Card(14, 'Karadoc', 1, 1, 1, 1, 'images/karadoc.jpg'),
+    new Card(15, 'Dagonet', 1, 1, 1, 1, 'images/dagonet.jpg'),
+    new Card(16, 'Mevanwi', 1, 1, 1, 1, 'images/mevanwi.jpg'),
+    new Card(17, 'Venec', 1, 1, 1, 1, 'images/venec.jpg'),
+    new Card(18, 'Le Roi Burgonde', 1, 1, 1, 1, 'images/le-roi-burgonde.jpg'),
+    new Card(19, 'Méléagant', 1, 1, 1, 1, 'images/meleagant.jpg'),
+    new Card(20, 'Le Maître d\'Armes', 1, 1, 1, 1, 'images/maitre-d-armes.jpg'),
 ];
-
-// POUR PLUS TARD
-const deckSuite = [
-    new Card(6, 'Guenièvre', 1, 1, 1, ''),
-    new Card(7, 'Duchesse d\'Aquitaine', 1, 1, 1, ''),
-    new Card(8, 'Séli', 1, 1, 1, ''),
-    new Card(9, 'Bohort', 1, 1, 1, ''),
-    new Card(10, 'Élias', 1, 1, 1, ''),
-    new Card(11, 'Merlin', 1, 1, 1, ''),
-    new Card(12, 'La Dame du Lac', 1, 1, 1, ''),
-    new Card(13, 'Loth', 1, 1, 1, ''),
-    new Card(14, 'Le Jurisconsulte', 1, 1, 1, ''),
-    new Card(15, 'Dagonet', 1, 1, 1, ''),
-    new Card(16, 'Mevanwi', 1, 1, 1, ''),
-    new Card(17, 'Venec', 1, 1, 1, ''),
-    new Card(18, 'Le Roi Burgonde', 1, 1, 1, ''),
-    new Card(19, 'Méléagant', 1, 1, 1, ''),
-    new Card(20, 'Le Maître d\'Armes', 1, 1, 1, ''),
-]
-
 
 class Player {
     constructor(name, deck, number) {
@@ -108,7 +118,17 @@ class Player {
 
     isHandFull() {
         if (this.hand.length === 5) {
-            return "";
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    isBoardFull() {
+        if (this.board.length === 5) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -437,72 +457,73 @@ const playerCardsInHand = document.querySelector('.hand-player1');
 // Recherche ID d'une div selectionné pour pouvoir la resortir
 playerCardsInHand.addEventListener('click', event => {
     if (event.target && event.target.classList.value === "card") {
-        const dataId = event.target.closest('.card').dataset.id;
-        const cardHandToBoard = player1.hand.find(card => card.id == dataId);
-        if (player1.useGems(cardHandToBoard.cost)) {
-            player1.board.push(cardHandToBoard);
-            let newHand = removeFromArray(player1.hand, cardHandToBoard);
-
-            player1.hand = newHand;
-            player1.refreshHand();
-            player1.refreshBoard();
+        if (player1.isBoardFull() === true) {
+            createPop('Vous avez déjà cinq cartes sur le terrain, vous ne pouvez pas en jouer plus pour le moment.');
         } else {
-            createPop('Vous ne pouvez pas jouer cette carte, vous n\'avez pas assez de mana.')
+            const dataId = event.target.closest('.card').dataset.id;
+            const cardHandToBoard = player1.hand.find(card => card.id == dataId);
+            if (player1.useGems(cardHandToBoard.cost)) {
+                player1.board.push(cardHandToBoard);
+                let newHand = removeFromArray(player1.hand, cardHandToBoard);
+
+                player1.hand = newHand;
+                player1.refreshHand();
+                player1.refreshBoard();
+            } else {
+                createPop('Vous ne pouvez pas jouer cette carte, vous n\'avez pas assez de mana.')
+            }
         }
+        
     }
 })
-
-/*const playerCardsInHand2 = document.querySelector('.hand-player2');
-
-playerCardsInHand2.addEventListener('click', event => {
-    if (event.target && event.target.classList.value === "card") {
-        const dataId = event.target.closest('.card').dataset.id;
-        const cardHandToBoard = player2.hand.find(card => card.id == dataId);
-        player2.board.push(cardHandToBoard);
-        let newHand = removeFromArray(player2.hand, cardHandToBoard);
-
-        player2.hand = newHand;
-        player2.refreshHand();
-        player2.refreshBoard();
-    }
-})*/
 
 // Ajout du listener pour attaquer une carte adverse
 const playerCardsOnBoard = document.querySelector('.board-player1');
 const enemyCardsOnBoard = document.querySelector('.board-player2');
 const opponent = document.querySelector('#player-2');
+let cardAttacker;
 
 playerCardsOnBoard.addEventListener('click', event => {
     if (event.target && event.target.classList.value === "card") {
         const dataId = event.target.closest('.card').dataset.id;
-        const cardAttacker = player1.board.find(card => card.id == dataId);
-        
-        enemyCardsOnBoard.addEventListener('click', event => {
-            if (event.target && event.target.classList.value === "card") {
-                const dataId = event.target.closest('.card').dataset.id;
-                const cardDefender = player2.board.find(card => card.id == dataId);
-
-                cardAttacker.attack(cardDefender);
-                player2.refreshBoard();
-            }
-        })
-
-        opponent.addEventListener('click', event => {
-            if (event.target && event.target.dataset.id === "player2") {
-                const dataId = event.target.closest('div').dataset.id;
-                const playerDefender = (dataId === 'player2' ? player2 : player1);
-                
-                if (playerDefender.board.length === 0) {
-                    cardAttacker.attack(playerDefender);
-                    player2.isAlive();
-                } else {
-                    createPop('Vous ne pouvez pas attaquer votre adversaire, car il lui reste des cartes sur son plateau.');
-                }
-                
-            }
-        })
+        cardAttacker = player1.board.find(card => card.id == dataId);
     }
 })
+
+enemyCardsOnBoard.addEventListener('click', event => {
+    if (event.target && event.target.classList.value === "card") {
+        attackCard(cardAttacker, event);
+    }
+})
+
+opponent.addEventListener('click', event => {
+    if (event.target && event.target.dataset.id === "player2") {
+        attackPlayer(cardAttacker, event);
+    }
+})
+
+
+function attackCard(cardAttacker, event) {
+    if (cardAttacker instanceof Card) {
+        const dataId = event.target.closest('.card').dataset.id;
+        const cardDefender = player2.board.find(card => card.id == dataId);
+
+        cardAttacker.attack(cardDefender);
+        player2.refreshBoard();
+    }
+}
+
+function attackPlayer(cardAttacker, event) {
+    const dataId = event.target.closest('div').dataset.id;
+    const playerDefender = (dataId === 'player2' ? player2 : player1);
+            
+    if (playerDefender.board.length === 0) {
+        cardAttacker.attack(playerDefender);
+        player2.isAlive();
+    } else {
+        createPop('Vous ne pouvez pas attaquer votre adversaire, car il lui reste des cartes sur son plateau.');
+    }
+}
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -515,20 +536,23 @@ async function computerTurn() {
     let winner;
     
     for (let i = 0; i < cardsInHand.length; i++) {
-        if (cardsInHand[i].cost <= player2.mana) {
-            console.log('Joue une carte dans 2s');
-            await sleep(2000);
+        if (player2.isBoardFull() === false) {
+            if (cardsInHand[i].cost <= player2.mana) {
+                console.log('Joue une carte dans 2s');
+                await sleep(2000);
 
-            if (player2.useGems(cardsInHand[i].cost)) {
-                player2.board.push(cardsInHand[i]);
-                let newHand = removeFromArray(cardsInHand, cardsInHand[i]);
+                if (player2.useGems(cardsInHand[i].cost)) {
+                    player2.board.push(cardsInHand[i]);
+                    let newHand = removeFromArray(cardsInHand, cardsInHand[i]);
 
-                player2.hand = newHand;
-                player2.refreshHand();
-                turnCardsPlayer2();
-                player2.refreshBoard();
-            } 
+                    player2.hand = newHand;
+                    player2.refreshHand();
+                    turnCardsPlayer2();
+                    player2.refreshBoard();
+                } 
+            }
         }
+        
     }
 
     for (let i = 0; i < cardsOnBoard.length; i++) {
