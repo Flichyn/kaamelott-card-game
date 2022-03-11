@@ -676,3 +676,6 @@ function createCard(card) {
     return newCard;
 }
 
+function refreshPage(){
+    window.location.reload();
+} 
