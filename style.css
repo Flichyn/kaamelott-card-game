@@ -1,5 +1,3 @@
-@import url('http://fonts.cdnfonts.com/css/oldania-adf-std');
-
 :root {
     --width: calc(744px / 4);
     --height: calc(1039px / 4);
@@ -10,7 +8,7 @@ body {
     margin: 0;
     background-image: url("images/background.webp");
     user-select: none;
-    font-family: 'Oldania ADF Std', sans-serif !important;
+    font-family: 'Oldania ADF Std', sans-serif;
 }
 
 #start-game {
