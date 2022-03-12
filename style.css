@@ -10,7 +10,7 @@ body {
     margin: 0;
     background-image: url("images/background.webp");
     user-select: none;
-    font-family: 'Oldania ADF Std', sans-serif;
+    font-family: 'Oldania ADF Std', sans-serif !important;
 }
 
 #start-game {
